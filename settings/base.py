@@ -37,7 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # own applications
     'apps.accounts',
+    'apps.crm',
+
+    # used applications
     'compressor',
 ]
 
@@ -87,7 +92,7 @@ DATABASES = {
 }
 
 
-# Password validation
+# Authentication, Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
@@ -144,6 +149,8 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 )
+
+# Media files
 
 MEDIA_ROOT = os.path.join(BASE_DIR, '/media/')
 
