@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     # used applications
     'compressor',
+    'django_select2'
 ]
 
 MIDDLEWARE = [
@@ -63,7 +64,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR + '/templates/'),
-            os.path.join(BASE_DIR + '/apps/accounts/templates')
+            os.path.join(BASE_DIR + '/apps/accounts/templates'),
+            os.path.join(BASE_DIR + '/apps/crm/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -115,7 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = '/dashboard/'
+LOGIN_REDIRECT_URL = '/crm/dashboard/'
 LOGOUT_REDIRECT_URL = '/'
 
 
