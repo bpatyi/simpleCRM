@@ -26,7 +26,12 @@ urlpatterns = [
 
     url(r'^$', index, name='index'),
 
-    url(r'', include('apps.accounts.urls')),
+    # own apps
+    url(r'^accounts/', include('apps.accounts.urls')),
+    url(r'^crm/', include('apps.crm.urls')),
+
+    # installed app urls
+    url(r'^select2/', include('django_select2.urls')),
 ]
 
 if settings.DEBUG:
