@@ -20,6 +20,9 @@ class CustomUser(AbstractBaseUser):
     last_login = models.DateTimeField(default=None, blank=True, null=True)
     date_joined = models.DateTimeField(auto_now_add=True)
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'username'
