@@ -13,11 +13,13 @@
             {% endblock title %}
         </title>
 
-        <!-- Bootstrap -->
         {% compress css %}
-        <link href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
         <!-- Fontawesome -->
-        <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
+        <!-- Main -->
+        <link rel="stylesheet" href="{% static "stylesheets/main.min.css" %}">
         {% endcompress %}
 
         {% block extra_css %}{% endblock extra_css %}
@@ -34,7 +36,13 @@
     <body>
         {% block body%}
 
+        {% block navigation %}
+            {% include 'navigation.html' %}
+        {% endblock navigation %}
+
+        <div class="container">
         {% block content %}{% endblock content %}
+        </div>
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         {% compress js %}

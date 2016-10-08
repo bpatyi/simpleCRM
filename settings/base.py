@@ -44,7 +44,8 @@ INSTALLED_APPS = [
 
     # used applications
     'compressor',
-    'django_select2'
+    'django_select2',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [
