@@ -3,6 +3,7 @@ from django.contrib.auth import views as auth_views
 from django.views.generic.edit import CreateView
 
 from .forms import CustomUserCreationForm
+from .views import Registration
 
 
 urlpatterns = [
@@ -16,11 +17,7 @@ urlpatterns = [
     ),
     url(
         '^register/',
-        CreateView.as_view(
-            template_name="auth/register.html",
-            form_class=CustomUserCreationForm,
-            success_url='/'
-        ),
+        Registration.as_view(),
         name='registration'
     ),
     url(

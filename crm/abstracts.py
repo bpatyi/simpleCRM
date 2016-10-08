@@ -1,6 +1,6 @@
 from django.db import models
 
-from apps.base.abstracts import AbstractBaseModel
+from base.abstracts import AbstractBaseModel
 
 
 class AbstractCompanyModel(AbstractBaseModel):

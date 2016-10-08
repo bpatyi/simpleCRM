@@ -9,16 +9,18 @@ from .abstracts import (
     AbstractEmailModel,
     AbstractPhoneModel
 )
-from apps.accounts.models import CustomUser
 
 
 class UserCompany(AbstractCompanyModel):
-    created_by = models.ForeignKey(CustomUser)
+    created_by = models.ForeignKey("accounts.CustomUser")
+
+    def get_by_name(self, name):
+        return self.objects.get(name=name)
 
 
 class UserCompanyManager(AbstractBaseModel):
     user_company_id = models.ForeignKey(UserCompany)
-    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user_id = models.ForeignKey("accounts.CustomUser", on_delete=models.CASCADE)
 
 
 class Individual(AbstractIndividualModel):
@@ -39,4 +41,3 @@ class IndividualEmail(AbstractEmailModel):
 
 class IndividualPhone(AbstractPhoneModel):
     individual_id = models.ForeignKey(Individual)
-

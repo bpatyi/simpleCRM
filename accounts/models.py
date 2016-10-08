@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.utils.http import urlquote
 from django.core.mail import send_mail
 
-from .managers import CustomUserManager
+from accounts.managers import CustomUserManager
 
 
 class CustomUser(AbstractBaseUser):
@@ -12,7 +12,7 @@ class CustomUser(AbstractBaseUser):
     email = models.EmailField(blank=True, unique=True)
     first_name = models.CharField(max_length=254, blank=True)
     last_name = models.CharField(max_length=254, blank=True)
-    company_name = models.CharField(max_length=254, blank=True)
+    company_id = models.ForeignKey("crm.UserCompany", blank=True, null=True)
     phone_number = models.CharField(max_length=32, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -26,11 +26,14 @@ class CustomUser(AbstractBaseUser):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ('email', 'company_name')
+    REQUIRED_FIELDS = ('email', )
 
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
+
+    def __str__(self):              # __unicode__ on Python 2
+        return self.email
 
     def get_absolute_url(self):
         return '/users/%s/' % urlquote(self.username)
@@ -59,3 +62,15 @@ class CustomUser(AbstractBaseUser):
         """
         send_mail(subject, message, from_email, [self.email])
 
+    def has_perm(self, perm, obj=None):
+        "Does the user have a specific permission?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    def has_module_perms(self, app_label):
+        "Does the user have permissions to view the app `app_label`?"
+        # Simplest possible answer: Yes, always
+        return True
+
+    def set_company_id(self, id):
+        self.company_id = id

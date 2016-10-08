@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # own applications
-    'apps.accounts',
-    'apps.crm',
+    'accounts',
+    'crm',
 
     # used applications
     'compressor',
@@ -65,8 +65,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR + '/templates/'),
-            os.path.join(BASE_DIR + '/apps/accounts/templates'),
-            os.path.join(BASE_DIR + '/apps/crm/templates'),
+            os.path.join(BASE_DIR + '/accounts/templates'),
+            os.path.join(BASE_DIR + '/crm/templates'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -100,7 +100,7 @@ DATABASES = {
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 AUTHENTICATION_BACKENDS = [
-    'apps.accounts.backends.CustomUserAuth'
+    'accounts.backends.CustomUserAuth'
 ]
 
 AUTH_PASSWORD_VALIDATORS = [

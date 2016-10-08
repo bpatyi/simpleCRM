@@ -4,6 +4,10 @@
 
 {% block content %}
 
+    {% if form.errors %}
+    {{ form.errors }}
+    {% endif %}
+
     <form action="{% url 'registration' %}" method="post">
         {% csrf_token %}
 
