@@ -12,7 +12,6 @@ class CustomUser(AbstractBaseUser):
     email = models.EmailField(blank=True, unique=True)
     first_name = models.CharField(max_length=254, blank=True)
     last_name = models.CharField(max_length=254, blank=True)
-    company_id = models.ForeignKey("crm.UserCompany", blank=True, null=True)
     phone_number = models.CharField(max_length=32, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -71,6 +70,3 @@ class CustomUser(AbstractBaseUser):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
         return True
-
-    def set_company_id(self, id):
-        self.company_id = id

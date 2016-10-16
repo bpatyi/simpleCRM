@@ -1,32 +1,85 @@
-from enum import (
-    Enum,
-    unique
-)
+from base.enums import Enum
 
 
-@unique
 class EntityType(Enum):
     # ev
-    sole_trade = 'Sole Trade'
+    SOLE_TRADE = 'ST'
     # ec
-    sole_venture = 'Sole Venture'
+    SOLE_VENTURE = 'SV'
     # bt
-    limited_partnership = 'Limited Partnership'
+    LIMITED_PARTNERSHIP = 'LP'
     # kkt
-    general_partnership = 'General Partnership'
+    GENERAL_PARTNERSHIP = 'GP'
     # kht
-    limited_liability_company = 'Limited Liabiltity Company'
+    LIMITED_LIABILITY_COMPANY = 'LLC'
     # kv
-    community_interest_company = 'Community Interest Company'
+    COMMUNITY_INTEREST_COMPANY = 'CIC'
     # rt
-    joint_venture = 'Joint Venture'
+    JOINT_VENTURE = 'JV'
     # nyrt
-    joint_stock_company = 'Joint Stock Company'
+    JOINT_STOCK_COMPANY = 'JSC'
     # zrt
-    public_limited_company = 'Public Limited Company'
+    PUBLIC_LIMITED_COMPANY = 'PLC'
+
+    _CHOICES = (
+        (SOLE_TRADE, 'Sole trade'),
+        (SOLE_VENTURE, 'Sole venture'),
+        (LIMITED_PARTNERSHIP, 'Limited partnership'),
+        (GENERAL_PARTNERSHIP, 'General partnership'),
+        (LIMITED_LIABILITY_COMPANY, 'Limited liability company'),
+        (COMMUNITY_INTEREST_COMPANY, 'Community interest company'),
+        (JOINT_VENTURE, 'Joint venture'),
+        (JOINT_STOCK_COMPANY, 'Joint stock company'),
+        (PUBLIC_LIMITED_COMPANY, 'Public limited company')
+    )
 
 
-@unique
-class CompanyType(Enum):
-    user = 1
-    contact = 2
+class Gender(Enum):
+    MALE = 'M'
+    FEMALE = 'F'
+    UNKNOWN = 'U'
+    OTHER = 'O'
+
+    _CHOICES = (
+        (MALE, 'Male'),
+        (FEMALE, 'Female'),
+        (UNKNOWN, 'Unknown'),
+        (OTHER, 'Other')
+    )
+
+
+class FamilyStatus(Enum):
+    MARREID = 'M'
+    SINGLE = 'S'
+    WIDOW = 'W'
+    PARTNER = 'P'
+    DIVORCED = 'D'
+
+    _CHOICES = (
+        (MARREID, 'Married'),
+        (SINGLE, 'Single'),
+        (WIDOW, 'Widow'),
+        (PARTNER, 'Partner'),
+        (DIVORCED, 'Divorced')
+    )
+
+
+class EducationLevel(Enum):
+    ELEMENTERY = 'E'
+    VOCATIONAL = 'V'
+    HIGH = 'H'
+    DEGREE = 'D'
+    MASTER_DEGREE = 'MD'
+    DOCTORAL_DEGREE = 'DD'
+    PROFESSIONAL_DEGREE = 'PD'
+
+
+    _CHOICES = (
+        (ELEMENTERY, 'Elementery'),
+        (VOCATIONAL, 'Vocational'),
+        (HIGH, 'High'),
+        (DEGREE, 'Degree'),
+        (MASTER_DEGREE, 'Master degree'),
+        (DOCTORAL_DEGREE, 'Doctoral degree'),
+        (PROFESSIONAL_DEGREE, 'Professional degree')
+    )

@@ -1,8 +1,18 @@
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 
-from .views import Dashboard
+from crm.views import (
+    Dashboard,
+    IndividualList,
+    IndividualDetail,
+    IndividualCreate
+)
 
 urlpatterns = [
-    url('^dashboard/$', login_required(Dashboard.as_view()), name='dashboard')
+    url('^dashboard/$', login_required(Dashboard.as_view()), name='dashboard'),
+
+    # Individuals
+    url(r'^individuals/$', IndividualList.as_view(), name='individual-list'),
+    url(r'^individuals/(?P<pk>\d+)/$', IndividualDetail.as_view(), name='individual-detail'),
+    url(r'^individuals/create/$', IndividualCreate.as_view(), name='individual-create'),
 ]

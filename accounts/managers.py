@@ -1,7 +1,7 @@
 from datetime import datetime
 from django.contrib.auth.base_user import BaseUserManager
 
-from crm.models import UserCompany
+from crm.models import UserCompany, UserCompanyConnection
 
 
 class CustomUserManager(BaseUserManager):
@@ -31,8 +31,10 @@ class CustomUserManager(BaseUserManager):
             )
             company.save()
 
-            user.set_company_id(company.id)
-            user.save(using=self._db)
+            UserCompanyConnection(
+                user_id = user,
+                company_id = company
+            ).save()
 
         return user
 

@@ -1,0 +1,3 @@
+
+class NotFoundOptionExcpetion(Exception):
+    pass

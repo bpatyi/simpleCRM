@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Individual List</h2>
+
+    <ul>
+    {% for individual in object_list %}
+        <li>{{ individual.id }} <a href="{% url 'individual-detail' individual.id %}">detail</a></li>
+    {% empty %}
+        <li>No individuals yet.</li>
+    {% endfor %}
+    </ul>
+{% endblock content %}
