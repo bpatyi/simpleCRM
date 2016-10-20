@@ -1,7 +1,7 @@
 from django.views import View
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 from crm.forms import (
     IndividualForm,
@@ -119,16 +119,63 @@ class IndividualCreate(View):
         )
 
         for form in email_form_set:
-            email = IndividualEmail.objects.create(
-                individual_id=individual.id,
-                email=form.cleaned_data.get('email')
-            )
+            if form.is_valid() and form.cleaned_data:
+                email = IndividualEmail.objects.create(
+                    individual_id=individual.id,
+                    email=form.cleaned_data.get('email')
+                )
 
         for form in phone_form_set:
-            phone = IndividualPhone.objects.create(
-                individual_id=individual.id,
-                number=form.cleaned_data.get('number'),
-                type=form.cleaned_data.get('type')
-            )
+            if form.is_valid() and form.cleaned_data:
+                phone = IndividualPhone.objects.create(
+                    individual_id=individual.id,
+                    number=form.cleaned_data.get('number'),
+                    type=form.cleaned_data.get('type')
+                )
 
         return redirect('individual-list')
+
+
+class IndividualEdit(View):
+    template_name = "individual_form.html"
+
+    def get(self, request, id):
+
+        individual = get_object_or_404(Individual, id=1)
+        emails = individual.individualemail_set.all()
+        phones = individual.individualphone_set.all()
+
+        print([email.__dict__ for email in emails])
+        print([phone.__dict__ for phone in phones])
+
+        context = {
+            'form': IndividualForm(instance=individual),
+            'address_form': IndividualAddressForm(
+                instance=IndividualAddress.objects.filter(individual_id=id)[0]
+            ),
+            'form_sets': {
+                'email': {
+                    'title': 'Emails',
+                    'form_set': IndividualEmailFormSet(
+                        prefix="email",
+                        initial=[email.__dict__ for email in emails] if emails else None
+                    ),
+                },
+                'phone': {
+                    'title': 'Phones',
+                    'form_set': IndividualPhoneFormSet(
+                        prefix="phone",
+                        initial=[phone.__dict__ for phone in phones] if phones else None
+                    )
+                }
+            }
+        }
+
+        return render(
+            request,
+            self.template_name,
+            context
+        )
+
+    def post(self, request):
+        pass

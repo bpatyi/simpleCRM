@@ -5,7 +5,8 @@ from crm.views import (
     Dashboard,
     IndividualList,
     IndividualDetail,
-    IndividualCreate
+    IndividualCreate,
+    IndividualEdit
 )
 
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
     url(r'^individuals/$', IndividualList.as_view(), name='individual-list'),
     url(r'^individuals/(?P<pk>\d+)/$', IndividualDetail.as_view(), name='individual-detail'),
     url(r'^individuals/create/$', IndividualCreate.as_view(), name='individual-create'),
+    url(r'^individuals/edit/(?P<id>\d+)/$', IndividualEdit.as_view(), name='individual-edit'),
 ]

@@ -56,11 +56,14 @@ class AbstractPhoneModel(AbstractBaseModel):
 
 
 class AbstractAddressModel(AbstractBaseModel):
-    country = CountryField()
+    country = CountryField(blank=True)
     zip_code = models.CharField(max_length=16)
-    city = models.CharField(max_length=127)
-    district = models.CharField(max_length=127)
-    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=127, blank=True)
+    district = models.CharField(max_length=127, blank=True)
+    address = models.CharField(max_length=255, blank=True)
+
+    class Meta:
+        abstract = True
 
 
 class AbstractIndividualModel(AbstractBaseModel):
