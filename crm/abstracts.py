@@ -2,7 +2,10 @@ import phonenumbers
 
 from django.db import models
 
-from base.abstracts import AbstractBaseModel
+from base.abstracts import (
+    AbstractBaseModel,
+    CleanableModel
+)
 from crm.enums import (
     Gender,
     FamilyStatus,
@@ -25,14 +28,15 @@ class AbstractCompanyModel(AbstractBaseModel):
         abstract = True
 
 
-class AbstractEmailModel(AbstractBaseModel):
+class AbstractEmailModel(AbstractBaseModel, CleanableModel):
     email = models.EmailField()
 
     class Meta:
         abstract = True
 
 
-class AbstractPhoneModel(AbstractBaseModel):
+class AbstractPhoneModel(AbstractBaseModel, CleanableModel):
+    country = CountryField(blank=True)
     number = models.CharField(max_length=64)
     type = models.CharField(max_length=16, blank=True)
 
@@ -55,18 +59,27 @@ class AbstractPhoneModel(AbstractBaseModel):
         }.get(prototype, 'unknown')
 
 
-class AbstractAddressModel(AbstractBaseModel):
+class AbstractAddressModel(AbstractBaseModel, CleanableModel):
     country = CountryField(blank=True)
-    zip_code = models.CharField(max_length=16)
-    city = models.CharField(max_length=127, blank=True)
-    district = models.CharField(max_length=127, blank=True)
-    address = models.CharField(max_length=255, blank=True)
+    postal_code = models.CharField(max_length=16, blank=True)
+    postal_code_suffix = models.CharField(max_length=16, null=True, blank=True)
+    county = models.CharField(max_length=127, null=True, blank=True)
+    administrative_area = models.CharField(max_length=127, null=True, blank=True)
+    locality = models.CharField(max_length=127, blank=True)
+    district = models.CharField(max_length=127, null=True, blank=True)
+    route = models.CharField(max_length=255, blank=True)
+    street_number = models.IntegerField(null=True)
+
+    final_type = models.CharField(max_length=32, blank=True)
+    formatted_address = models.CharField(max_length=255, blank=True)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
 
     class Meta:
         abstract = True
 
 
-class AbstractIndividualModel(AbstractBaseModel):
+class AbstractIndividualModel(AbstractBaseModel, CleanableModel):
     gender = models.CharField(
         max_length=1,
         choices=Gender.get_choices()
@@ -86,7 +99,7 @@ class AbstractIndividualModel(AbstractBaseModel):
         null=True,
         choices=EducationLevel.get_choices()
     )
-    birth_date = models.DateTimeField(blank=True, null=True)
+    birth_date = models.DateField(blank=True, null=True)
 
     class Meta:
         abstract = True

@@ -93,6 +93,7 @@ class InboundContactPhone(AbstractPhoneModel):
     class Meta:
         app_label = "crm"
 
+
 class OutboundContact(models.Model):
     individual = models.ForeignKey("crm.Individual")
 

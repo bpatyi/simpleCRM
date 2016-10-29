@@ -6,7 +6,7 @@
 
     <h1>Add new Individual</h1>
 
-    <form action="{% url 'individual-create' %}" method="post">
+    <form role="form" action="" method="post">
     {% csrf_token %}
 
         {% for field in form %}
@@ -27,6 +27,7 @@
             {% endif %}
         {% endfor %}
 
+        {% comment %}
         <hr>
         <h2>Address</h2>
 
@@ -90,6 +91,7 @@
             </p>
         </section>
         {% endfor %}
+        {% endcomment %}
 
     <input class="btn btn-default" type="submit" name="submit" value="Submit">
 
@@ -98,7 +100,7 @@
 {% endblock content %}
 
 {% block extrajs %}
-    <script type="text/javascript" src="{% static 'js/form_set_handler.js' %}"></script>
+    <!--<script type="text/javascript" src="{% static 'js/form_set_handler.js' %}"></script>-->
     <script type="text/javascript" src="{% static 'bower_components/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js' %}"></script>
 
     <script type="text/javascript">
