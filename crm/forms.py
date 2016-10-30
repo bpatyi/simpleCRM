@@ -12,7 +12,10 @@ from crm.models import (
     Individual,
     IndividualAddress,
     IndividualEmail,
-    IndividualPhone
+    IndividualPhone,
+    SourceType,
+    Source,
+    Campaign
 )
 
 
@@ -135,3 +138,24 @@ class IndividualPhoneForm(ModelForm):
             self.number,
             phonenumbers.PhoneNumberFormat.E164
         )
+
+
+class SourceTypeForm(ModelForm):
+
+    class Meta:
+        model = SourceType
+        exclude = ['id']
+
+
+class SourceForm(ModelForm):
+
+    class Meta:
+        model = Source
+        exclude = ['id']
+
+
+class CampaignForm(ModelForm):
+
+    class Meta:
+        model = Campaign
+        exclude = ['id']

@@ -27,18 +27,12 @@ class UserCompanyConnection(AbstractBaseModel):
     company = models.ForeignKey("crm.UserCompany")
     user = models.ForeignKey("accounts.CustomUser", on_delete=models.CASCADE)
 
-    class Meta:
-        app_label = "crm"
-
     def __str__(self):
         return ' - '.join([self.user.username, self.company.name])
 
 
 class Individual(AbstractIndividualModel):
     pass
-
-    class Meta:
-        app_label = "crm"
 
     def __str__(self):
         return ' '.join([self.title, self.first_name, self.last_name])
@@ -48,54 +42,48 @@ class IndividualAddress(AbstractAddressModel):
     individual = models.ForeignKey("crm.Individual")
 
     class Meta:
-        app_label = "crm"
         verbose_name_plural = "Individual addresses"
 
 
 class IndividualEmail(AbstractEmailModel):
     individual = models.ForeignKey("crm.Individual")
 
-    class Meta:
-        app_label = "crm"
-
 
 class IndividualPhone(AbstractPhoneModel):
     individual = models.ForeignKey("crm.Individual")
 
-    class Meta:
-        app_label = "crm"
-
 
 class InboundContact(AbstractIndividualModel):
-    individual = models.ForeignKey("crm.Individual")
-
-    class Meta:
-        app_label = "crm"
+    individual = models.ForeignKey("crm.Individual", null=True, blank=True)
+    source = models.ForeignKey("crm.Source")
 
 
 class InboundContactAddress(AbstractAddressModel):
     inbound_contact = models.ForeignKey("crm.InboundContact")
 
-    class Meta:
-        app_label = "crm"
-
 
 class InboundContactEmail(AbstractEmailModel):
     inbound_contact = models.ForeignKey("crm.InboundContact")
-
-    class Meta:
-        app_label = "crm"
 
 
 class InboundContactPhone(AbstractPhoneModel):
     inbound_contact = models.ForeignKey("crm.InboundContact")
 
-    class Meta:
-        app_label = "crm"
-
 
 class OutboundContact(models.Model):
     individual = models.ForeignKey("crm.Individual")
 
-    class Meta:
-        app_label = "crm"
+
+class Campaign(AbstractBaseModel):
+    name = models.CharField(max_length=127)
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
+
+
+class SourceType(AbstractBaseModel):
+    name = models.CharField(max_length=127)
+
+
+class Source(AbstractBaseModel):
+    name = models.CharField(max_length=127)
+    type_of_source = models.ForeignKey("crm.SourceType", blank=True, null=True)

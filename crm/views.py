@@ -13,13 +13,21 @@ from crm.forms import (
     IndividualForm,
     IndividualAddressForm,
     IndividualPhoneForm,
-    IndividualEmailForm
+    IndividualEmailForm,
+    SourceTypeForm,
+    SourceForm,
+    CampaignForm
 )
 from crm.models import (
     Individual,
     IndividualAddress,
     IndividualPhone,
-    IndividualEmail
+    IndividualEmail,
+    SourceType,
+    Source,
+    Campaign,
+    Inbound,
+    Outbound
 )
 
 
@@ -239,251 +247,108 @@ class IndividualEmailDelete(DeleteView):
         return reverse('individual-detail', args=[self.object.individual.id])
 
 
-# class IndividualCreate(View):
-#     template_name = 'individual_form.html'
-#
-#     def get(self, request):
-#
-#         context = {
-#             'form': IndividualForm(),
-#             'address_form': IndividualAddressForm(prefix='address', instance=Individual()),
-#             'form_sets': {
-#                 'email': {
-#                     'title': 'Emails',
-#                     'form_set': IndividualEmailFormSet(prefix="email", instance=Individual()),
-#                 },
-#                 'phone': {
-#                     'title': 'Phones',
-#                     'form_set': IndividualPhoneFormSet(prefix="phone", instance=Individual())
-#                 }
-#             }
-#         }
-#
-#         return render(
-#             request,
-#             self.template_name,
-#             context
-#         )
-#
-#     def post(self, request):
-#         form = IndividualForm(request.POST)
-#
-#         if not form.is_valid():
-#             context = {
-#                 'form': form,
-#                 'address_form': IndividualAddressForm(request.POST, prefix="address"),
-#                 'form_sets': {
-#                     'email': {
-#                         'title': 'Emails',
-#                         'form_set': IndividualEmailFormSet(request.POST, prefix="email"),
-#                     },
-#                     'phone': {
-#                         'title': 'Phones',
-#                         'form_set': IndividualPhoneFormSet(request.POST, prefix="phone")
-#                     }
-#                 }
-#             }
-#
-#         individual = form.save(commit=False)
-#
-#         address_form = IndividualAddressForm(request.POST, prefix="address", instance=individual)
-#         email_form_set = IndividualEmailFormSet(request.POST, prefix="email", instance=individual)
-#         phone_form_set = IndividualPhoneFormSet(request.POST, prefix="phone", instance=individual)
-#
-#         if not address_form.is_valid() or \
-#            not email_form_set.is_valid() or \
-#            not phone_form_set.is_valid():
-#
-#             context = {
-#                 'form': form,
-#                 'address_form': address_form,
-#                 'form_sets': {
-#                     'email': {
-#                         'title': 'Emails',
-#                         'form_set': email_form_set,
-#                     },
-#                     'phone': {
-#                         'title': 'Phones',
-#                         'form_set': phone_form_set
-#                     }
-#                 }
-#             }
-#
-#             return render(
-#                 request,
-#                 self.template_name,
-#                 context
-#             )
-#
-#         individual = form.save(commit=True)
-#         address_form = IndividualAddressForm(request.POST, prefix="address", instance=individual)
-#         address_form.save()
-#
-#         email_form_set = IndividualEmailFormSet(request.POST, prefix="email", instance=individual)
-#
-#         if not email_form_set.is_valid():
-#             raise Exception("mi fasz van")
-#
-#         email_form_set.save()
-#
-#         phone_form_set = IndividualPhoneFormSet(request.POST, prefix="phone", instance=individual)
-#
-#         if not phone_form_set.is_valid():
-#             raise Exception("mi fasz 32")
-#
-#         phone_form_set.save()
-#         # address = IndividualAddress.objects.create(
-#         #     individual_id=individual.id,
-#         #     country=address_form.cleaned_data.get('country'),
-#         #     zip_code=address_form.cleaned_data.get('zip_code'),
-#         #     city=address_form.cleaned_data.get('city'),
-#         #     district=address_form.cleaned_data.get('district'),
-#         #     address=address_form.cleaned_data.get('address')
-#         # )
-#
-#         # for form in email_form_set:
-#         #     if form.cleaned_data:
-#         #         email = IndividualEmail.objects.create(
-#         #             individual_id=individual.id,
-#         #             email=form.cleaned_data.get('email')
-#         #         )
-#
-#         # for form in phone_form_set:
-#         #     if form.cleaned_data:
-#         #         phone = IndividualPhone.objects.create(
-#         #             individual_id=individual.id,
-#         #             number=form.cleaned_data.get('number'),
-#         #             type=form.cleaned_data.get('type')
-#         #         )
-#
-#         return redirect('individual-list')
-#
-#
-# class IndividualEdit(View):
-#     template_name = "individual_form.html"
-#
-#     def get(self, request, id):
-#         individual = get_object_or_404(Individual, id=id)
-#         emails = individual.individualemail_set.all()
-#         phones = individual.individualphone_set.all()
-#
-#         context = {
-#             'form': IndividualForm(instance=individual),
-#             'address_form': IndividualAddressForm(
-#                 instance=IndividualAddress.objects.filter(individual_id=id)
-#             ),
-#             'form_sets': {
-#                 'email': {
-#                     'title': 'Emails',
-#                     'form_set': IndividualEmailFormSet(
-#                         prefix="email",
-#                         initial=[email.__dict__ for email in emails] if emails else None
-#                     ),
-#                 },
-#                 'phone': {
-#                     'title': 'Phones',
-#                     'form_set': IndividualPhoneFormSet(
-#                         prefix="phone",
-#                         initial=[phone.__dict__ for phone in phones] if phones else None
-#                     )
-#                 }
-#             }
-#         }
-#
-#         return render(
-#             request,
-#             self.template_name,
-#             context
-#         )
-#
-#     def post(self, request, id):
-#         individual = get_object_or_404(Individual, id=id)
-#         emails = individual.individualemail_set.all()
-#         phones = individual.individualphone_set.all()
-#
-#
-#         form = IndividualForm(
-#             request.POST,
-#             instance=individual
-#         )
-#         address_form = IndividualAddressForm(
-#             request.POST,
-#             instance=IndividualAddress.objects.get(individual_id=individual.id)
-#         )
-#         email_form_set = IndividualEmailFormSet(
-#             request.POST,
-#             prefix="email",
-#             initial=[email.__dict__ for email in emails] if emails else None
-#         )
-#         phone_form_set = IndividualPhoneFormSet(
-#             request.POST,
-#             prefix="phone",
-#             initial=[phone.__dict__ for phone in phones] if phones else None
-#         )
-#
-#         if not form.is_valid() or \
-#            not address_form.is_valid() or \
-#            not email_form_set.is_valid() or \
-#            not phone_form_set.is_valid():
-#
-#             context = {
-#                 'form': form,
-#                 'address_form': address_form,
-#                 'form_sets': {
-#                     'email': {
-#                         'title': 'Emails',
-#                         'form_set': email_form_set,
-#                     },
-#                     'phone': {
-#                         'title': 'Phones',
-#                         'form_set': phone_form_set
-#                     }
-#                 }
-#             }
-#
-#             return render(
-#                 request,
-#                 self.template_name,
-#                 context
-#             )
-#
-#         individual = form.save()
-#         address = IndividualAddress.objects.update(
-#             individual_id=individual.id,
-#             country=address_form.cleaned_data.get('country'),
-#             zip_code=address_form.cleaned_data.get('zip_code'),
-#             city=address_form.cleaned_data.get('city'),
-#             district=address_form.cleaned_data.get('district'),
-#             address=address_form.cleaned_data.get('address')
-#         )
-#
-#         print(email_form_set.deleted_forms)
-#         #for form in email_form_set:
-#         #    if form['id'].value() in marked_for_delete_ids:
-#         #        IndividualEmail.objects.delete(form.get('id'))
-#
-#         #    email = IndividualEmail.objects.get(individual_id=individual.id)
-#         #    if not email:
-#         #        IndividualEmail.objects.create(
-#         #            individual_id=individual.id,
-#         #            email=form.cleaned_data.get('email')
-#         #        )
-#         #    elif email.email != form.cleaned_data.get('email'):
-#         #        email.update(email=email)
-#
-#         print(phone_form_set.deleted_forms)
-#         #for form in phone_form_set:
-#         #    if form['id'].value() in marked_for_delete_ids:
-#         #        IndividualPhone.objects.delete(form.get('id'))
-#
-#         #    phone = IndividualPhone.objects.get(individual_id=individual.id)
-#         #    if not phone:
-#         #        IndividualPhone.objects.create(
-#         #            individual_id=individual.id,
-#         #            number=form.cleaned_data.get('number'),
-#         #            type=form.cleaned_data.get('type')
-#         #        )
-#         #    elif phone.number != form.cleaned_data.get('number') or phone.type != form.cleaned_data.get('type'):
-#         #        phone.update(number=form.cleaned_data.get('number'), type=form.cleaned_data.get('type'))
-#
-#         return redirect('individual-list')
+class SourceTypeList(ListView):
+    model = SourceType
+    template_name = 'source_type_list.html'
+
+
+class SourceTypeCreate(CreateView):
+    template_name = 'source_type_form.html'
+    model = SourceType
+    form_class = SourceTypeForm
+
+    def get_success_url(self):
+        return reverse('source-type-list')
+
+
+class SourceTypeEdit(UpdateView):
+    template_name = 'source_type_form.html'
+    model = SourceType
+    form_class = SourceTypeForm
+
+    def get_success_url(self):
+        return reverse('source-type-list')
+
+
+class SourceTypeDelete(DeleteView):
+    model = SourceType
+    success_url = reverse_lazy('source-type-list')
+    template_name = 'confirm_delete.html'
+
+
+class SourceList(ListView):
+    model = Source
+    template_name = 'source_list.html'
+
+
+class SourceCreate(CreateView):
+    template_name = 'source_form.html'
+    model = Source
+    form_class = SourceForm
+
+    def get_success_url(self):
+        return reverse('source-list')
+
+
+class SourceEdit(UpdateView):
+    template_name = 'source_form.html'
+    model = Source
+    form_class = SourceForm
+
+    def get_success_url(self):
+        return reverse('source-list')
+
+
+class SourceDelete(DeleteView):
+    model = Source
+    success_url = reverse_lazy('source-list')
+    template_name = 'confirm_delete.html'
+
+
+class CampaignList(ListView):
+    model = Campaign
+    template_name = 'campaign_list.html'
+
+
+class CampaignCreate(CreateView):
+    template_name = 'campaign_form.html'
+    model = Campaign
+    form_class = CampaignForm
+
+    def get_success_url(self):
+        return reverse('campaign-list')
+
+
+class CampaignEdit(UpdateView):
+    template_name = 'campaign_form.html'source
+    model = Campaign
+    form_class = CampaignForm
+
+    def get_success_url(self):
+        return reverse('Campaign-list')
+
+
+class CampaignDelete(DeleteView):
+    model = Campaign
+    success_url = reverse_lazy('campaign-list')
+    template_name = 'confirm_delete.html'
+
+
+class InboundList(ListView):
+    model = Inbound
+    template_name = 'inbound_list.html'
+
+
+class InboundDetail(DetailView):
+    model = Inbound
+    template_name = 'inbound_detail.html'
+
+
+class OutboundList(ListView):
+    model = Outbound
+    template_name = 'Outbound_list.html'
+
+
+class OutboundDetail(DetailView):
+    model = Outbound
+    template_name = 'outbound_detail.html'

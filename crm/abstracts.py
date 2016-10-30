@@ -85,8 +85,8 @@ class AbstractIndividualModel(AbstractBaseModel, CleanableModel):
         choices=Gender.get_choices()
     )
     title = models.CharField(max_length=127, blank=True, null=True)
-    first_name = models.CharField(max_length=255, blank=False, null=True)
-    last_name = models.CharField(max_length=255, blank=False, null=True)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
     family_status = models.CharField(
         max_length=32,
         blank=True,

@@ -73,7 +73,6 @@ class EducationLevel(Enum):
     DOCTORAL_DEGREE = 'DD'
     PROFESSIONAL_DEGREE = 'PD'
 
-
     _CHOICES = (
         (ELEMENTERY, 'Elementery'),
         (VOCATIONAL, 'Vocational'),
