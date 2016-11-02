@@ -29,6 +29,7 @@ urlpatterns = [
     # own apps
     url(r'^accounts/', include('accounts.urls')),
     url(r'^crm/', include('crm.urls')),
+    url(r'^api/', include('api.urls')),
 
     # installed app urls
     url(r'^select2/', include('django_select2.urls')),
