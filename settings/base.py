@@ -44,12 +44,14 @@ INSTALLED_APPS = [
     # own applications
     'accounts',
     'crm',
+    'api',
 
     # used applications
     'compressor',
     'django_select2',
     'widget_tweaks',
-    'django_countries'
+    'django_countries',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -201,6 +203,21 @@ LOGGING = {
             },
         }
     }
+
+# Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer'
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    )
+}
+
 
 if DEBUG:
     # make all loggers use the console.
