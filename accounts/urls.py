@@ -8,7 +8,7 @@ from .views import Registration
 
 urlpatterns = [
     url(
-        '^login/$',
+        r'^login/$',
         auth_views.login,
         {
             'template_name': 'auth/login.html'
@@ -16,17 +16,17 @@ urlpatterns = [
         name='login'
     ),
     url(
-        '^register/',
+        r'^register/',
         Registration.as_view(),
         name='registration'
     ),
     url(
-        '^logout/$',
+        r'^logout/$',
         auth_views.logout,
         name='logout'
     ),
     url(
-        '^password_change/$',
+        r'^password_change/$',
         auth_views.password_change,
         {
             'template_name': 'auth/password_change.html'
@@ -34,7 +34,7 @@ urlpatterns = [
         name='password_change'
     ),
     url(
-        '^password_change/done/$',
+        r'^password_change/done/$',
         auth_views.password_change_done,
         {
             'template_name': 'auth/password_change_done.html'
@@ -42,7 +42,7 @@ urlpatterns = [
         name='password_change_done'
     ),
     url(
-        '^password_reset/$',
+        r'^password_reset/$',
         auth_views.password_reset,
         {
             'template_name': 'auth/password_reset.html'
@@ -50,7 +50,7 @@ urlpatterns = [
         name='password_reset'
     ),
     url(
-        '^password_reset/done/$',
+        r'^password_reset/done/$',
         auth_views.password_reset_done,
         {
             'template_name': 'auth/password_reset_done.html'
@@ -58,7 +58,7 @@ urlpatterns = [
         name='password_reset_done'
     ),
     url(
-        '^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         auth_views.password_reset_confirm,
         {
             'template_name': 'auth/password_reset_confirm.html'
@@ -66,7 +66,7 @@ urlpatterns = [
         name='password_reset_confirm'
     ),
     url(
-        '^reset/done/$',
+        r'^reset/done/$',
         auth_views.password_reset_complete,
         {
             'template_name': 'auth/password_reset_complete.html'
