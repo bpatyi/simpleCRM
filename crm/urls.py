@@ -30,10 +30,10 @@ from crm.views import (
     SourceTypeDelete,
     SourceTypeEdit,
     SourceTypeList,
-    InboundList,
-    InboundDetail,
-    OutboundList,
-    OutboundDetail
+    InboundContactList,
+    InboundContactDetail,
+    OutboundContactList,
+    OutboundContactDetail
 )
 
 urlpatterns = [
@@ -193,23 +193,23 @@ urlpatterns = [
     ),
 
     url(
-        r'^inbounds/$',
-        login_required(InboundList.as_view()),
-        name='inbound-list'
+        r'^inbound-contacts/$',
+        login_required(InboundContactList.as_view()),
+        name='inbound-contact-list'
     ),
     url(
-        r'^inbounds/(?P<pk>\d+)/$',
-        login_required(InboundDetail.as_view()),
-        name='inbound-detail'
+        r'^inbound-contacts/(?P<pk>\d+)/$',
+        login_required(InboundContactDetail.as_view()),
+        name='inbound-contact-detail'
     ),
     url(
-        r'^outbounds/$',
-        login_required(OutboundList.as_view()),
-        name='outbound-list'
+        r'^outbound-contacts/$',
+        login_required(OutboundContactList.as_view()),
+        name='outbound-contact-list'
     ),
     url(
-        r'^outbounds/(?P<pk>\d+)/$',
-        login_required(OutboundDetail.as_view()),
-        name='outbound-detail'
+        r'^outbound-contacts/(?P<pk>\d+)/$',
+        login_required(OutboundContactDetail.as_view()),
+        name='outbound-contact-detail'
     ),
 ]

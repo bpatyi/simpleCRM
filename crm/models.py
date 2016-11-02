@@ -55,7 +55,7 @@ class IndividualPhone(AbstractPhoneModel):
 
 class InboundContact(AbstractIndividualModel):
     individual = models.ForeignKey("crm.Individual", null=True, blank=True)
-    source = models.ForeignKey("crm.Source")
+    source = models.ForeignKey("crm.Source", null=True)
 
 
 class InboundContactAddress(AbstractAddressModel):

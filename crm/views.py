@@ -26,8 +26,8 @@ from crm.models import (
     SourceType,
     Source,
     Campaign,
-    Inbound,
-    Outbound
+    InboundContact,
+    OutboundContact
 )
 
 
@@ -320,7 +320,7 @@ class CampaignCreate(CreateView):
 
 
 class CampaignEdit(UpdateView):
-    template_name = 'campaign_form.html'source
+    template_name = 'campaign_form.html'
     model = Campaign
     form_class = CampaignForm
 
@@ -334,21 +334,21 @@ class CampaignDelete(DeleteView):
     template_name = 'confirm_delete.html'
 
 
-class InboundList(ListView):
-    model = Inbound
-    template_name = 'inbound_list.html'
+class InboundContactList(ListView):
+    model = InboundContact
+    template_name = 'inbound_contact_list.html'
 
 
-class InboundDetail(DetailView):
-    model = Inbound
-    template_name = 'inbound_detail.html'
+class InboundContactDetail(DetailView):
+    model = InboundContact
+    template_name = 'inbound_contact_detail.html'
 
 
-class OutboundList(ListView):
-    model = Outbound
-    template_name = 'Outbound_list.html'
+class OutboundContactList(ListView):
+    model = OutboundContact
+    template_name = 'outbound_contact_list.html'
 
 
-class OutboundDetail(DetailView):
-    model = Outbound
-    template_name = 'outbound_detail.html'
+class OutboundContactDetail(DetailView):
+    model = OutboundContact
+    template_name = 'outbound_contact_detail.html'
