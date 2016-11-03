@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    <li class="breadcrumb-item">Source</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> List
+                        <a href="{% url 'source-create' %}" class="btn btn-primary pull-right">Create</a>
+                    </div>
+                    <div class="card-block">
+                        {% if not object_list %}
+                            <h3>Not objects.</h3>
+                        {% else %}
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for source in object_list %}
+                                <tr>
+                                    <td>{{ source.name }}</td>
+                                    <td>{{ source.type_of_source }}</td>
+                                    <td>
+                                        <span class="tag tag-success">Active</span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        {% include 'pagination.html' %}
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

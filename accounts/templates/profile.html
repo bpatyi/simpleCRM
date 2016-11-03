@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    <li class="breadcrumb-item">Profile</li>
+    <li class="breadcrumb-item">{{ request.user.username }}</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> {{ request.user.username }}
+                    </div>
+                    <div class="card-block">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

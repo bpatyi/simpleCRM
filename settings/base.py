@@ -25,7 +25,7 @@ SECRET_KEY = '+39#k_#0k-&@2(w1scvk2vzzbdu=jx7le%x**^14x&)vadcux-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # GOOGLE MAPS KEY
@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'django_select2',
     'widget_tweaks',
     'django_countries',
-    'rest_framework'
+    'rest_framework',
+    'django_gravatar'
 ]
 
 MIDDLEWARE = [
@@ -184,12 +185,12 @@ LOGGING = {
     },
     'handlers': {
         'console': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
             },
         'file': {
-            'level': 'DEBUG',
+            'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': './file.log',
             'formatter': 'simple'
@@ -198,7 +199,7 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['file'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': True,
             },
         }

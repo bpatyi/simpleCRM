@@ -1,3 +1,100 @@
+// coreui variables and mixins
+@import "bootstrap-variables";
+@import "bootstrap_src/variables";
+@import "custom-variables";
+@import "bootstrap_src/mixins";
+@import "coreui/mixins";
+
+// Reset and dependencies
+@import "bootstrap_src/normalize";
+@import "bootstrap_src/print";
+
+// coreui CSS
+@import "bootstrap_src/reboot";
+@import "bootstrap_src/type";
+@import "bootstrap_src/images";
+@import "bootstrap_src/code";
+@import "bootstrap_src/grid";
+@import "bootstrap_src/tables";
+    @import "bootstrap_custom/tables";
+@import "bootstrap_src/forms";
+@import "bootstrap_src/buttons";
+    @import "bootstrap_custom/buttons";
+
+// Components
+@import "bootstrap_src/animation";
+@import "bootstrap_src/dropdown";
+    @import "bootstrap_custom/dropdown";
+@import "bootstrap_src/button-group";
+@import "bootstrap_src/input-group";
+    @import "bootstrap_custom/input-group";
+//@import "custom-forms";
+@import "bootstrap_src/nav";
+    @import "bootstrap_custom/nav";
+@import "bootstrap_src/navbar";
+    @import "bootstrap_custom/navbar";
+@import "bootstrap_src/card";
+    @import "bootstrap_custom/card";
+@import "bootstrap_src/breadcrumb";
+    @import "bootstrap_custom/breadcrumb";
+@import "bootstrap_src/pagination";
+@import "bootstrap_src/tags";
+    @import "bootstrap_custom/tags";
+//@import "jumbotron";
+@import "bootstrap_src/alert";
+@import "bootstrap_src/progress";
+    @import "bootstrap_custom/progress";
+
+@import "bootstrap_src/media";
+@import "bootstrap_src/list-group";
+@import "bootstrap_src/responsive-embed";
+@import "bootstrap_src/close";
+
+// Components w/ JavaScript
+@import "bootstrap_src/modal";
+@import "bootstrap_src/tooltip";
+@import "bootstrap_src/popover";
+@import "bootstrap_src/carousel";
+
+// Utility classes
+@import "bootstrap_src/utilities";
+
+// Vendors Styles
+@import "vendors/vendors";
+
+// coreUI Styles
+// Additional typography
+@import "coreui/typography";
+
+// Animations
+@import "coreui/animate";
+
+// coreui files
+@import "coreui/grid";
+@import "coreui/layout";
+@import "coreui/navigation";
+@import "coreui/aside";
+@import "coreui/loading";
+@import "coreui/widgets";
+@import "coreui/footer";
+@import "coreui/buttons";
+@import "coreui/others";
+@import "coreui/breadcrumb-menu";
+@import "coreui/avatars";
+@import "coreui/callout";
+@import "coreui/switches";
+@import "coreui/charts";
+@import "coreui/utilities-border";
+
+// Temporary fixes
+@import "coreui/temp";
+
+// Mobile View
+@import "coreui/mobile";
+
+// Custom styles
+@import "custom";
+
 // Components
 @import "components/buttons";
 @import "components/navigation";
@@ -22,5 +119,3 @@
 @import "pages/about";
 @import "pages/contact";
 @import "pages/home";
-
-// Vendor

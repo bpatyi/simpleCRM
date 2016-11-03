@@ -2,42 +2,60 @@
 
 {% load widget_tweaks staticfiles %}
 
+{% block breadcrumbs %}
+    {{ block.super }}
+    <li class="breadcrumb-item">Individual</li>
+    <li class="breadcrumb-item">Create</li>
+    <li class="breadcrumb-item">Other info</li>
+{% endblock %}
+
 {% block content %}
-    <h2>Other inforamtions</h2>
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> Individual other information
+                    </div>
+                    <div class="card-block">
+                        <form method="post" action="">{% csrf_token %}
 
+                            {% for key, form in forms.items %}
 
-    <form method="post" action="">{% csrf_token %}
+                                <h3>{{ key|title }}</h3>
 
-        {% for key, form in forms.items %}
+                                {% for field in form %}
 
-            <h3>{{ key|title }}</h3>
+                                    <div class="form-group {% if field.errors %}has-error{% endif %}">
+                                        {% if not field.is_hidden %}
+                                        <label class="control-label">{{ field.label}}</label>
+                                        {% endif %}
+                                        {{ field|add_class:"form-control" }}
+                                        {% if field.errors %}
+                                        <span class="help-block">
+                                            <ul>
+                                            {% for error in field.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                            </ul>
+                                        </span>
+                                        {% endif %}
+                                    </div>
 
-            {% for field in form %}
+                                {% endfor %}
 
-                <div class="form-group {% if field.errors %}has-error{% endif %}">
-                    {% if not field.is_hidden %}
-                    <label class="control-label">{{ field.label}}</label>
-                    {% endif %}
-                    {{ field|add_class:"form-control" }}
-                    {% if field.errors %}
-                    <span class="help-block">
-                        <ul>
-                        {% for error in field.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                        </ul>
-                    </span>
-                    {% endif %}
+                            {% endfor %}
+
+                            <a href="{% url 'individual-list' %}">Skip</a>
+
+                            <input class="btn btn-default" type="submit" name="submit" value="Submit">
+
+                        </form>
+                    </div>
                 </div>
-
-            {% endfor %}
-
-        {% endfor %}
-
-        <a href="{% url 'individual-list' %}">Skip</a>
-
-        <input class="btn btn-default" type="submit" name="submit" value="Submit">
-
-    </form>
-
-{% endblock content %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,11 +1,12 @@
 {
   "devDependencies": {
-    "gulp": "^3.9.1",
-    "gulp-gzip": "^1.4.0",
-    "gulp-livereload": "^3.8.1",
-    "gulp-minify-css": "^1.2.4",
-    "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.3.2",
-    "gulp-watch": "^4.3.10"
+    "gulp": "*",
+    "gulp-clean-css": "^2.0.13",
+    "gulp-gzip": "*",
+    "gulp-livereload": "*",
+    "gulp-minify-css": "*",
+    "gulp-rename": "*",
+    "gulp-sass": "*",
+    "gulp-watch": "*"
   }
 }

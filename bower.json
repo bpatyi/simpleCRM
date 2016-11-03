@@ -3,10 +3,14 @@
   "version": "0.1.0",
   "dependencies": {
     "jquery": "^3.1.0",
-    "bootstrap": "^3.3.7",
-    "font-awesome": "fontawesome#^4.6.3",
     "html5shiv": "^3.7.3",
     "respond": "^1.4.2",
-    "jquery.inputmask": "^3.3.3"
+    "jquery.inputmask": "^3.3.3",
+    "bootstrap": "4.0.0-alpha.5",
+    "tether": "latest",
+    "fontawesome": "latest",
+    "simple-line-icons": "latest",
+    "pace": "latest",
+    "chart.js": "^2.3.0"
   }
 }

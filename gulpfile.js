@@ -7,6 +7,7 @@ var minifycss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var gzip = require('gulp-gzip');
 var livereload = require('gulp-livereload');
+var cleanCSS = require('gulp-clean-css');
 
 var gzip_options = {
     threshold: '1kb',
@@ -21,6 +22,7 @@ gulp.task('sass', function() {
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('static/stylesheets'))
         .pipe(rename({suffix: '.min'}))
+        .pipe(cleanCSS({compatibility: 'ie8'}))
         .pipe(minifycss())
         .pipe(gulp.dest('static/stylesheets'))
         .pipe(gzip(gzip_options))

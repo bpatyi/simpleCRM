@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    <li class="breadcrumb-item">Campaign</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> List
+                        <a href="{% url 'campaign-create' %}" class="btn btn-primary pull-right">Create</a>
+                    </div>
+                    <div class="card-block">
+                        {% if not object_list %}
+                            <h3>Not objects.</h3>
+                        {% else %}
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Start date</th>
+                                    <th>End date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for campaign in object_list %}
+                                <tr>
+                                    <td>{{ campaign.name }}</td>
+                                    <td>{{ campaign.start_date }}</td>
+                                    <td>{{ campaign.end_date }}</td>
+                                    <td>
+                                        <span class="tag tag-success">Active</span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        {% include 'pagination.html' %}
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

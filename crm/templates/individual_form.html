@@ -2,102 +2,54 @@
 
 {% load widget_tweaks staticfiles %}
 
+{% block breadcrumbs %}
+    {{ block.super }}
+    <li class="breadcrumb-item">Individual</li>
+    <li class="breadcrumb-item">Create</li>
+{% endblock %}
+
 {% block content %}
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> Create new individual
+                    </div>
+                    <div class="card-block">
+                        <form role="form" action="" method="post">
+                        {% csrf_token %}
 
-    <h1>Add new Individual</h1>
+                            {% for field in form %}
+                                {% if not field.is_hidden %}
+                                <div class="form-group {% if field.errors %}has-error{% endif %}">
+                                    <label class="control-label">{{ field.label}}</label>
+                                    {{ field|add_class:"form-control" }}
+                                    {% if field.errors %}
+                                    <span class="help-block">
+                                        <ul>
+                                        {% for error in field.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                        </ul>
+                                    </span>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                            {% endfor %}
 
-    <form role="form" action="" method="post">
-    {% csrf_token %}
+                        <input class="btn btn-default" type="submit" name="submit" value="Submit">
 
-        {% for field in form %}
-            {% if not field.is_hidden %}
-            <div class="form-group {% if field.errors %}has-error{% endif %}">
-                <label class="control-label">{{ field.label}}</label>
-                {{ field|add_class:"form-control" }}
-                {% if field.errors %}
-                <span class="help-block">
-                    <ul>
-                    {% for error in field.errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                    </ul>
-                </span>
-                {% endif %}
-            </div>
-            {% endif %}
-        {% endfor %}
+                        </form>
 
-        {% comment %}
-        <hr>
-        <h2>Address</h2>
-
-        {% for field in address_form %}
-            {% if not field.is_hidden %}
-            <div class="form-group {% if field.errors %}has-error{% endif %}">
-                <label class="control-label">{{ field.label}}</label>
-                {{ field|add_class:"form-control" }}
-                {% if field.errors %}
-                <span class="help-block">
-                    <ul>
-                    {% for error in field.errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                    </ul>
-                </span>
-                {% endif %}
-            </div>
-            {% endif %}
-        {% endfor %}
-
-        {% for key, element in form_sets.items %}
-        <section role="{{ element.form_set.prefix }}">
-            <hr>
-            <h2>{{ element.title }}</h2>
-
-            {{ element.form_set.management_form }}
-
-            <input type="hidden" name="{{ element.form_set.prefix }}-counter" value="{{ element.form_set.total_form_count}}">
-
-            {% for form in element.form_set %}
-                <div class="block-wrapper form-{{ element.form_set.prefix }}-{{ forloop.counter0 }}">
-                    {% for field in form %}
-                        {% if not field.is_hidden %}
-                        <div class="form-group {% if field.errors %}has-error{% endif %}">
-                            <label class="control-label">{{ field.label}}</label>
-                            {{ field|add_class:"form-control" }}
-                            {% if field.errors %}
-                            <span class="help-block">
-                                <ul>
-                                {% for error in field.errors %}
-                                    <li>{{ error }}</li>
-                                {% endfor %}
-                                </ul>
-                            </span>
-                            {% endif %}
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                    <p>
-                        <button class="btn btn-danger delete" data-prefix="{{ element.form_set.prefix }}" data-form-id="{{ forloop.counter0 }}" href="#">
-                        Delete
-                        </button>
-                    </p>
+                    </div>
                 </div>
-            {% endfor %}
-            <p>
-                <button class="btn btn-primary add" data-prefix="{{ element.form_set.prefix }}">
-                Add another item
-                </button>
-            </p>
-        </section>
-        {% endfor %}
-        {% endcomment %}
-
-    <input class="btn btn-default" type="submit" name="submit" value="Submit">
-
-    </form>
-
-{% endblock content %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
 
 {% block extrajs %}
     <!--<script type="text/javascript" src="{% static 'js/form_set_handler.js' %}"></script>-->

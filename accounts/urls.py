@@ -3,7 +3,10 @@ from django.contrib.auth import views as auth_views
 from django.views.generic.edit import CreateView
 
 from .forms import CustomUserCreationForm
-from .views import Registration
+from .views import (
+    Registration,
+    Profile
+)
 
 
 urlpatterns = [
@@ -16,7 +19,7 @@ urlpatterns = [
         name='login'
     ),
     url(
-        r'^register/',
+        r'^register/$',
         Registration.as_view(),
         name='registration'
     ),
@@ -73,4 +76,9 @@ urlpatterns = [
         },
         name='password_reset_complete'
     ),
+    url(
+        r'^profile/(?P<pk>\d+)/$',
+        Profile.as_view(),
+        name='profile'
+    )
 ]

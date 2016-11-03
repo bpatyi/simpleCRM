@@ -48,6 +48,7 @@ class Dashboard(View):
 class IndividualList(ListView):
     model = Individual
     template_name = 'individual_list.html'
+    paginate_by = 25
 
 
 class IndividualDetail(DetailView):
@@ -250,6 +251,7 @@ class IndividualEmailDelete(DeleteView):
 class SourceTypeList(ListView):
     model = SourceType
     template_name = 'source_type_list.html'
+    paginate_by = 25
 
 
 class SourceTypeCreate(CreateView):
@@ -279,6 +281,7 @@ class SourceTypeDelete(DeleteView):
 class SourceList(ListView):
     model = Source
     template_name = 'source_list.html'
+    paginate_by = 25
 
 
 class SourceCreate(CreateView):
@@ -308,6 +311,7 @@ class SourceDelete(DeleteView):
 class CampaignList(ListView):
     model = Campaign
     template_name = 'campaign_list.html'
+    paginate_by = 25
 
 
 class CampaignCreate(CreateView):
@@ -337,6 +341,7 @@ class CampaignDelete(DeleteView):
 class InboundContactList(ListView):
     model = InboundContact
     template_name = 'inbound_contact_list.html'
+    paginate_by = 25
 
 
 class InboundContactDetail(DetailView):
@@ -347,6 +352,7 @@ class InboundContactDetail(DetailView):
 class OutboundContactList(ListView):
     model = OutboundContact
     template_name = 'outbound_contact_list.html'
+    paginate_by = 25
 
 
 class OutboundContactDetail(DetailView):

@@ -2,25 +2,62 @@
 
 {% load widget_tweaks %}
 
-{% block content %}
+{% block body-class %}{% endblock %}
 
-    <h2>Login</h2>
+{% block navigation %}{% endblock %}
 
-    {% if form.errors %}
-        <p class="error">Sorry, that's not a valid username or password. </p>
-    {% endif %}
+{% block content-wrapper %}
+    <div class="container d-table">
+        <div class="d-100vh-va-middle">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="card-group">
+                        <div class="card p-2">
+                            <div class="card-block">
+                                <h1>Login</h1>
+                                <p class="text-muted">Sign In to your account</p>
+                                {% if form.errors %}
+                                    <p class="error">Sorry, that's not a valid username or password. </p>
+                                {% endif %}
 
-    <form action="{% url 'login' %}" method="post"> {% csrf_token %}
-        <div class="form-group">
-            {{ form.username.label }}
-            {{ form.username|add_class:"form-control" }}
+                                <form action="{% url 'login' %}" method="post"> {% csrf_token %}
+                                    <div class="input-group mb-1">
+                                        <span class="input-group-addon"><i class="icon-user"></i>
+                                        </span>
+                                        {{ form.username|add_class:"form-control"|attr:"placeholder:Username" }}
+                                    </div>
+                                    <div class="input-group mb-2">
+                                        <span class="input-group-addon"><i class="icon-lock"></i>
+                                        </span>
+                                        {{ form.password|add_class:"form-control"|attr:"placeholder:Password" }}
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <input type="submit" class="btn btn-primary p-x-2" value="Login">
+                                        </div>
+                                        <div class="col-xs-6 text-xs-right">
+                                            <a class="btn btn-link p-x-0" href="{% url 'password_reset' %}">Forgot password?</a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card card-inverse card-primary py-3 hidden-md-down" style="width:44%">
+                            <div class="card-block text-xs-center">
+                                <div>
+                                    <h2>Sign up</h2>
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <a  class="btn btn-primary active mt-1" href="{% url 'registration' %}">
+                                    Register Now!
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            {{ form.password.label }}
-            {{ form.password|add_class:"form-control" }}
-        </div>
+    </div>
+    {% block footer %}{% endblock footer %}
 
-        <input class="btn btn-default" type="submit" value="Login">
-    </form>
-
-{% endblock content %}
+{% endblock content-wrapper %}

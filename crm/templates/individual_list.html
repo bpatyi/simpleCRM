@@ -1,13 +1,54 @@
 {% extends 'base.html' %}
 
-{% block content %}
-    <h2>Individual List</h2>
+{% block breadcrumbs %}
+    {{ block.super }}
+    <li class="breadcrumb-item">Individual</li>
+{% endblock %}
 
-    <ul>
-    {% for individual in object_list %}
-        <li>{{ individual.id }} <a href="{% url 'individual-detail' individual.id %}">detail</a></li>
-    {% empty %}
-        <li>No individuals yet.</li>
-    {% endfor %}
-    </ul>
+{% block content %}
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> List
+                        <a href="{% url 'individual-create' %}" class="btn btn-primary pull-right">Create</a>
+                    </div>
+                    <div class="card-block">
+                        {% if not object_list %}
+                            <h3>Not objects.</h3>
+                        {% else %}
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>title</th>
+                                    <th>First name</th>
+                                    <th>Last name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for individual in object_list %}
+                                <tr>
+                                    <td>{{ individual.title }}</td>
+                                    <td>{{ individual.first_name }}</td>
+                                    <td>{{ individual.last_name }}</td>
+                                    <td>
+                                        <span class="tag tag-success">Active</span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        {% include 'pagination.html' %}
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

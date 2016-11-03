@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block body-class %}{% endblock %}
+
+{% block navigation %}{% endblock %}
+
+{% block content-wrapper %}
+    <div class="container d-table">
+        <div class="d-100vh-va-middle">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="clearfix">
+                        <h1 class="float-xs-left display-3 mr-2">{% block status_code %}{% endblock %}</h1>
+                        <h4 class="pt-1">{% block title %}{% endblock %}</h4>
+                        <p class="text-muted">{% block description %}{% endblock %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}{% endblock footer %}

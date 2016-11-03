@@ -1,52 +1,36 @@
-<!-- Fixed navbar -->
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <!-- The mobile navbar-toggle button can be safely removed since you do not need it in a non-responsive implementation -->
-            <a class="navbar-brand" href="#">Simple CRM</a>
-        </div>
-        <!-- Note that the .navbar-collapse and .collapse classes have been removed from the #navbar -->
-        <div id="navbar">
-            {% if not user.is_authenticated %}
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+{% load gravatar %}
 
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li class="dropdown-header">Nav header</li>
-                        <li><a href="#">Separated link</a></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                </li>
-            </ul>
-            {% endif %}
-            {% comment %}
-            <form class="navbar-form navbar-left">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+<header class="navbar">
+    <div class="container-fluid">
+        <button class="navbar-toggler mobile-toggler hidden-lg-up" type="button">☰</button>
+        <a class="navbar-brand" href="#"></a>
+        <ul class="nav navbar-nav hidden-md-down">
+            <li class="nav-item">
+                <a class="nav-link navbar-toggler layout-toggler" href="#">☰</a>
+            </li>
+
+            <li class="nav-item px-1">
+                <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+            </li>
+            <li class="nav-item px-1">
+                <a class="nav-link" href="#">Users</a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav float-xs-right hidden-md-down">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    {% gravatar request.user.email 30 request.user.email 'img-avatar' %}
+                    <span class="hidden-md-down">{{ request.user.username }}</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a class="dropdown-item" href="{% url 'profile' request.user.id %}"><i class="fa fa-user"></i> Profile</a>
+                    <a class="dropdown-item" href="{% url 'logout' %}"><i class="fa fa-lock"></i> Logout</a>
                 </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-            {% endcomment %}
+            </li>
+            <li class="nav-item">
+                <a class="nav-link aside-toggle" href="#" style="display:none;">☰</a>
+            </li>
 
-            <ul class="nav navbar-nav navbar-right">
-                {% if user.is_authenticated %}
-                <li><a href="#">Profile</a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-                {% else %}
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'registration' %}">Registration</a></li>
-                {% endif %}
-            </ul>
-
-        </div>
-        <!--/.nav-collapse -->
+        </ul>
     </div>
-</nav>
+</header>

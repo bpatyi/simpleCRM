@@ -18,8 +18,26 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.contrib.staticfiles import views
 
-from core.views import index
+from django.conf.urls import (
+    handler400,
+    handler403,
+    handler404,
+    handler500
+)
 
+from core.views import (
+    index,
+    bad_request,
+    permission_denied,
+    page_not_found,
+    server_error
+)
+
+
+handler400 = 'core.views.bad_request'
+handler403 = 'core.views.permission_denied'
+handler404 = 'core.views.page_not_found'
+handler500 = 'core.views.server_error'
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -36,6 +54,12 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
+    from django.views.generic import TemplateView
+
     urlpatterns += [
         url(r'^static/(?P<path>.*)$', views.serve),
+        url(r'^400/$', bad_request),
+        url(r'^403/$', permission_denied),
+        url(r'^404/$', page_not_found),
+        url(r'^500/$', server_error),
     ]

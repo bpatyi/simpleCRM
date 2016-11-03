@@ -1,4 +1,4 @@
-{% load staticfiles compress %}
+{% load staticfiles compress gravatar %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,10 +14,10 @@
         </title>
 
         {% compress css %}
-        <!-- Bootstrap -->
-        <link rel="stylesheet" href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}">
         <!-- Fontawesome -->
         <link rel="stylesheet" href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}">
+        <!-- Simple line icons -->
+        <link rel="stylesheet" href="{% static 'bower_components/simple-line-icons/css/simple-line-icons.css' %}">
         <!-- Main -->
         <link rel="stylesheet" href="{% static "stylesheets/main.min.css" %}">
         {% endcompress %}
@@ -32,23 +32,78 @@
             <script src="{% static 'bower_components/respond/dest/respond.min.js' %}"></script>
             {% endcompress %}
         <![endif]-->
-     </head>
-    <body>
-        {% block body%}
+    </head>
+
+    <body class="{% block body-class %}navbar-fixed sidebar-nav fixed-nav{% endblock %}">
+        {% block body %}
 
         {% block navigation %}
             {% include 'navigation.html' %}
         {% endblock navigation %}
 
-        <div class="container">
-        {% block content %}{% endblock content %}
-        </div>
+        {% block content-wrapper %}
+            {% block sidebar %}
+                {% include 'sidebar.html' %}
+            {% endblock sidebar %}
+
+            <!-- Main content -->
+            <main class="main">
+
+                {% block breadcrumbs-wrapper %}
+                <!-- Breadcrumb -->
+                <ol class="breadcrumb">
+
+                    {% block breadcrumbs %}
+                    <li class="breadcrumb-item">Home</li>
+                    {% endblock breadcrumbs %}
+
+                    {% comment %}
+                    <!-- Breadcrumb Menu-->
+                    <li class="breadcrumb-menu">
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <a class="btn btn-secondary" href="#"><i class="icon-speech"></i></a>
+                            <a class="btn btn-secondary" href="./"><i class="icon-graph"></i> &nbsp;Dashboard</a>
+                            <a class="btn btn-secondary" href="#"><i class="icon-settings"></i> &nbsp;Settings</a>
+                        </div>
+                    </li>
+                    {% endcomment %}
+                </ol>
+                {% endblock breadcrumbs-wrapper %}
+
+                <div class="container-fluid">
+                    {% block content %}{% endblock content %}
+                </div>
+                <!-- /.conainer-fluid -->
+            </main>
+
+        {% endblock content-wrapper %}
+
+        {% block footer %}
+        {% include 'footer.html' %}
+        {% endblock footer %}
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         {% compress js %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Bootstrap and necessary plugins -->
+        <script src="{% static 'bower_components/tether/dist/js/tether.min.js' %}"></script>
+
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+
+        <script src="{% static 'bower_components/pace/pace.min.js' %}"></script>
+
+        <!-- Plugins and scripts required by all views -->
+        <script src="{% static 'bower_components/chart.js/dist/Chart.min.js' %}"></script>
+
+        <!-- GenesisUI main scripts -->
+        <script src="{% static 'js/coreui_app.js' %}"></script>
+
+        <!-- Plugins and scripts required by this views -->
+
+        <!-- Custom scripts required by this view -->
+        <script src="{% static 'js/coreui_views/main.js'%}"></script>
+
         {% endcompress %}
 
         {% block extrajs %}{% endblock %}
