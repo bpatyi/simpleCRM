@@ -1,12 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'individual_form.html' %}
 
-{% load widget_tweaks staticfiles %}
+{% load widget_tweaks staticfiles django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
     {{ block.super }}
-    <li class="breadcrumb-item">Individual</li>
-    <li class="breadcrumb-item">Create</li>
-    <li class="breadcrumb-item">Other info</li>
+    {% breadcrumb "Other information" "individual-add-other-info" %}
 {% endblock %}
 
 {% block content %}
@@ -16,7 +14,7 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Individual other information
+                        <i class="fa fa-align-justify"></i> Other information
                     </div>
                     <div class="card-block">
                         <form method="post" action="">{% csrf_token %}

@@ -1,11 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'individual_list.html' %}
 
-{% load widget_tweaks staticfiles %}
+{% load widget_tweaks staticfiles django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
     {{ block.super }}
-    <li class="breadcrumb-item">Individual</li>
-    <li class="breadcrumb-item">Create</li>
+    {% if '/create' in request.path %}
+        {% breadcrumb "Create" "individual-create" %}
+    {% elif '/edit' in request.path %}
+        {% with "Edit: "|add:objecte as title %}
+        {% breadcrumb title "individual-edit" object.pk %}
+        {% endwith %}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -15,7 +20,12 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Create new individual
+                        <i class="fa fa-align-justify"></i>
+                        {% if '/create' in request.path %}
+                        Create
+                        {% elif '/edit' in request.path %}
+                        Edit
+                        {% endif %}
                     </div>
                     <div class="card-block">
                         <form role="form" action="" method="post">
@@ -56,8 +66,6 @@
     <script type="text/javascript" src="{% static 'bower_components/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js' %}"></script>
 
     <script type="text/javascript">
-        $(document).ready(function(){
-            $('input[name="birth_date"]').inputmask('9999-99-99');
-        });
+        $('input[name="birth_date"]').inputmask('9999-99-99');
     </script>
 {% endblock extrajs %}

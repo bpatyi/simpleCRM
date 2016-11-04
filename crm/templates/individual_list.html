@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
+{% load django_bootstrap_breadcrumbs %}
+
 {% block breadcrumbs %}
     {{ block.super }}
-    <li class="breadcrumb-item">Individual</li>
+    {% breadcrumb "Indiviual" "individual-list" %}
 {% endblock %}
 
 {% block content %}
@@ -35,7 +37,8 @@
                                     <td>{{ individual.first_name }}</td>
                                     <td>{{ individual.last_name }}</td>
                                     <td>
-                                        <span class="tag tag-success">Active</span>
+                                        <a href="{% url 'individual-edit' individual.pk %}"><i class="fa fa-edit"></i></a>
+                                        <a href="{% url 'individual-delete' individual.pk %}"><i class="fa fa-remove"></i></a>
                                     </td>
                                 </tr>
                                 {% endfor %}

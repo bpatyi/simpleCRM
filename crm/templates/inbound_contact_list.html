@@ -1,8 +1,11 @@
+
 {% extends 'base.html' %}
+
+{% load django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
     {{ block.super }}
-    <li class="breadcrumb-item">Inboudn Contact</li>
+    {% breadcrumb "Inbound Contact" "inbound-contact-list" %}
 {% endblock %}
 
 {% block content %}

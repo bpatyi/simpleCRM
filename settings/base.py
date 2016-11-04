@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'django_countries',
     'rest_framework',
-    'django_gravatar'
+    'django_gravatar',
+    'django_bootstrap_breadcrumbs'
 ]
 
 MIDDLEWARE = [

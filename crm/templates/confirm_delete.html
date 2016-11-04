@@ -1,8 +1,32 @@
-{% extends 'base.html' %}
+{% extends 'campaign_list.html' %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {{ block.super }}
+    {% with "Delete: "|add:object.name as title %}
+    {% breadcrumb title "" %}
+    {% endwith %}
+{% endblock %}
 
 {% block content %}
-<form action="" method="post">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-    <input type="submit" value="Confirm" />
-</form>
+<div class="container-fluid">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fa fa-align-justify"></i> Delete campaign
+                    </div>
+                    <div class="card-block">
+                        <form action="" method="post">{% csrf_token %}
+                            <p>Are you sure you want to delete "{{ object }}"?</p>
+                            <input type="submit" value="Confirm" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

@@ -1,11 +1,16 @@
-{% extends 'base.html' %}
+{% extends 'campaign_list.html' %}
 
-{% load widget_tweaks staticfiles %}
+{% load widget_tweaks staticfiles django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
     {{ block.super }}
-    <li class="breadcrumb-item">Campaign</li>
-    <li class="breadcrumb-item">Create</li>
+    {% if '/create' in request.path %}
+        {% breadcrumb "Create" "campaign-create" %}
+    {% elif '/edit' in request.path %}
+        {% with "Edit: "|add:object.name as title %}
+        {% breadcrumb title "campaign-edit" object.pk %}
+        {% endwith %}
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -15,7 +20,12 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <i class="fa fa-align-justify"></i> Create new campaign
+                        <i class="fa fa-align-justify"></i>
+                        {% if '/create' in request.path %}
+                        Create
+                        {% elif '/edit' in request.path %}
+                        Edit
+                        {% endif %}
                     </div>
                     <div class="card-block">
                         <form role="form" action="" method="post">
