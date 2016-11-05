@@ -39,18 +39,18 @@ class Individual(AbstractIndividualModel):
 
 
 class IndividualAddress(AbstractAddressModel):
-    individual = models.ForeignKey("crm.Individual")
+    individual = models.ForeignKey("crm.Individual", related_name="address")
 
     class Meta:
         verbose_name_plural = "Individual addresses"
 
 
 class IndividualEmail(AbstractEmailModel):
-    individual = models.ForeignKey("crm.Individual")
+    individual = models.ForeignKey("crm.Individual", related_name="emails")
 
 
 class IndividualPhone(AbstractPhoneModel):
-    individual = models.ForeignKey("crm.Individual")
+    individual = models.ForeignKey("crm.Individual", related_name="phones")
 
 
 class InboundContact(AbstractIndividualModel):
@@ -59,15 +59,15 @@ class InboundContact(AbstractIndividualModel):
 
 
 class InboundContactAddress(AbstractAddressModel):
-    inbound_contact = models.ForeignKey("crm.InboundContact")
+    inbound_contact = models.ForeignKey("crm.InboundContact", related_name="address")
 
 
 class InboundContactEmail(AbstractEmailModel):
-    inbound_contact = models.ForeignKey("crm.InboundContact")
+    inbound_contact = models.ForeignKey("crm.InboundContact", related_name="emails")
 
 
 class InboundContactPhone(AbstractPhoneModel):
-    inbound_contact = models.ForeignKey("crm.InboundContact")
+    inbound_contact = models.ForeignKey("crm.InboundContact", related_name="phones")
 
 
 class OutboundContact(models.Model):

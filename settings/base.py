@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     'django_countries',
     'rest_framework',
     'django_gravatar',
-    'django_bootstrap_breadcrumbs'
+    'django_bootstrap_breadcrumbs',
+    'rest_framework_docs',
 ]
 
 MIDDLEWARE = [
@@ -73,8 +74,9 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR + '/templates/'),
-            os.path.join(BASE_DIR + '/accounts/templates'),
-            os.path.join(BASE_DIR + '/crm/templates'),
+            os.path.join(BASE_DIR + '/accounts/templates/'),
+            os.path.join(BASE_DIR + '/crm/templates/'),
+            os.path.join(BASE_DIR + '/api/templates/')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -213,7 +215,9 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer'
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly'

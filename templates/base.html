@@ -42,31 +42,31 @@
 
         {% block body %}
 
-        {% block navigation %}
-            {% include 'navigation.html' %}
-        {% endblock navigation %}
+            {% block navigation %}
+                {% include 'navigation.html' %}
+            {% endblock navigation %}
 
-        {% block content-wrapper %}
-            {% block sidebar %}
-                {% include 'sidebar.html' %}
-            {% endblock sidebar %}
+            {% block content-wrapper %}
+                {% block sidebar %}
+                    {% include 'sidebar.html' %}
+                {% endblock sidebar %}
 
-            <!-- Main content -->
-            <main class="main">
+                <!-- Main content -->
+                <main class="main">
 
-                {% render_breadcrumbs "breadcrumbs.html" %}
+                    {% render_breadcrumbs "breadcrumbs.html" %}
 
-                <div class="container-fluid">
-                    {% block content %}{% endblock content %}
-                </div>
-                <!-- /.conainer-fluid -->
-            </main>
+                    <div class="container-fluid">
+                        {% block content %}{% endblock content %}
+                    </div>
+                    <!-- /.conainer-fluid -->
+                </main>
 
-        {% endblock content-wrapper %}
+            {% endblock content-wrapper %}
 
-        {% block footer %}
-        {% include 'footer.html' %}
-        {% endblock footer %}
+            {% block footer %}
+            {% include 'footer.html' %}
+            {% endblock footer %}
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         {% compress js %}
@@ -89,6 +89,8 @@
 
         <!-- Custom scripts required by this view -->
         <script src="{% static 'js/coreui_views/main.js'%}"></script>
+
+        <script type="text/javascript" src='{% static "rest_framework_docs/js/dist.min.js" %}'></script>
 
         {% endcompress %}
 

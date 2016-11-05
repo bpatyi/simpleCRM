@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 
 from rest_framework_jwt.views import (
     obtain_jwt_token,
@@ -7,6 +7,7 @@ from rest_framework_jwt.views import (
 )
 
 from api.views import (
+    ApiEndpoints,
     CampaignListAPI,
     CampaignCreateAPI,
     CampaignRetrieveAPI,
@@ -41,6 +42,11 @@ from api.views import (
 
 
 urlpatterns = [
+    url(
+        r'^docs',
+        ApiEndpoints.as_view(),
+        name='api_endpoints'
+    ),
     # Token
     url(
         r'^auth/token/$',

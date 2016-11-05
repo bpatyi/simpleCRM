@@ -1,0 +1,84 @@
+.endpoint {
+  &:hover .card-header {
+    background-color: #dde4e6;
+  }
+  .card-header {
+    padding: 5px;
+    cursor: pointer;
+    .title {
+      margin-top: 12px;
+      margin-left: 10px;
+      font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+      word-wrap: break-word;
+      .fa {
+        color: #c0cdd1;
+      }
+    }
+  }
+}
+
+.methods {
+  margin: 2px 0 5px;
+  .method {
+    padding: 4px 8px;
+    margin-top: 10px;
+    color: #FFF;
+    &.get {
+      background-color: #18bc9c;
+    }
+    &.post {
+      background-color: #f39c12;
+    }
+    &.patch, &.put {
+      background-color: #028d94;
+    }
+    &.delete {
+      background-color: #e74c3c;
+    }
+    &.options {
+      background-color: #3498db;
+    }
+    &.plug {
+      color: #2C3E50;
+      border: 1px solid #2C3E50;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      -moz-background-clip: padding;
+      -webkit-background-clip: padding-box;
+      background-clip: padding-box;
+      font-size: 14px;
+      width: 30px;
+      height: 29px;
+      margin-left: 10px;
+    }
+  }
+}
+
+
+.endpoint {
+  .card-block {
+    padding: 10px;
+    .lead {
+      margin-bottom: 5px;
+    }
+    .alert {
+      padding: 5px 10px;
+      margin-top: 10px;
+    }
+    .fields-desc {
+      margin-bottom: 5px;
+    }
+    .fields {
+      list-style-type: square;
+    }
+  }
+  > .card-header + .card-collapse > .card-block {
+    border: 0;
+  }
+}
+
+.tag-required {
+    padding: 2px 5px;
+    margin-left: 5px;
+}

@@ -7664,3 +7664,66 @@ base-chart.chart {
       left: 0 !important; }
     body.mobile-open .main {
       margin-left: 200px !important; } }
+
+.endpoint:hover .card-header {
+  background-color: #dde4e6; }
+
+.endpoint .card-header {
+  padding: 5px;
+  cursor: pointer; }
+  .endpoint .card-header .title {
+    margin-top: 12px;
+    margin-left: 10px;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    word-wrap: break-word; }
+    .endpoint .card-header .title .fa {
+      color: #c0cdd1; }
+
+.methods {
+  margin: 2px 0 5px; }
+  .methods .method {
+    padding: 4px 8px;
+    margin-top: 10px;
+    color: #FFF; }
+    .methods .method.get {
+      background-color: #18bc9c; }
+    .methods .method.post {
+      background-color: #f39c12; }
+    .methods .method.patch, .methods .method.put {
+      background-color: #028d94; }
+    .methods .method.delete {
+      background-color: #e74c3c; }
+    .methods .method.options {
+      background-color: #3498db; }
+    .methods .method.plug {
+      color: #2C3E50;
+      border: 1px solid #2C3E50;
+      -webkit-border-radius: 50%;
+      -moz-border-radius: 50%;
+      border-radius: 50%;
+      -moz-background-clip: padding;
+      -webkit-background-clip: padding-box;
+      background-clip: padding-box;
+      font-size: 14px;
+      width: 30px;
+      height: 29px;
+      margin-left: 10px; }
+
+.endpoint .card-block {
+  padding: 10px; }
+  .endpoint .card-block .lead {
+    margin-bottom: 5px; }
+  .endpoint .card-block .alert {
+    padding: 5px 10px;
+    margin-top: 10px; }
+  .endpoint .card-block .fields-desc {
+    margin-bottom: 5px; }
+  .endpoint .card-block .fields {
+    list-style-type: square; }
+
+.endpoint > .card-header + .card-collapse > .card-block {
+  border: 0; }
+
+.tag-required {
+  padding: 2px 5px;
+  margin-left: 5px; }
