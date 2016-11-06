@@ -1,12 +1,18 @@
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from django.template import RequestContext
+from django.views import View
 
 
-def index(request):
+class Index(View):
+    template_name = 'index.html'
 
-    return render_to_response(
-        'index.html'
-    )
+    def get(self, request):
+
+        return render(
+            request,
+            self.template_name,
+            {}
+        )
 
 
 def bad_request(request):

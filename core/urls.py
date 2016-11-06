@@ -26,7 +26,7 @@ from django.conf.urls import (
 )
 
 from core.views import (
-    index,
+    Index,
     bad_request,
     permission_denied,
     page_not_found,
@@ -42,7 +42,7 @@ handler500 = 'core.views.server_error'
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
-    url(r'^$', index, name='index'),
+    url(r'^$', Index.as_view(), name='index'),
 
     # own apps
     url(r'^accounts/', include('accounts.urls')),

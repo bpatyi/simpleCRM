@@ -6,7 +6,7 @@
     "html5shiv": "^3.7.3",
     "respond": "^1.4.2",
     "jquery.inputmask": "^3.3.3",
-    "bootstrap": "4.0.0-alpha.5",
+    "bootstrap": "*",
     "tether": "latest",
     "fontawesome": "latest",
     "simple-line-icons": "latest",
