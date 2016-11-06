@@ -8,11 +8,13 @@ from crm.models import (
     InboundContactPhone,
     InboundContactAddress,
     OutboundContact,
+    OutboundContactMailInfo,
+    OutboundContactEmailInfo,
+    OutboundContactPhoneInfo,
     Campaign,
     SourceType,
     Source
 )
-
 
 from rest_framework import serializers
 
@@ -136,7 +138,31 @@ class InboundContactSerializer(serializers.ModelSerializer):
         return inbound_contact
 
 
+class OutboundContactMailInfoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OutboundContactMailInfo
+        fields = '__all__'
+
+
+class OutboundContactEmailInfoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OutboundContactEmailInfo
+        fields = '__all__'
+
+
+class OutboundContactPhoneInfoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = OutboundContactPhoneInfo
+        fields = '__all__'
+
+
 class OutboundContactSerializer(serializers.ModelSerializer):
+    mail_info = OutboundContactMailInfoSerializer(many=True)
+    phone_infos = OutboundContactPhoneInfoSerializer(many=True)
+    email_infos = OutboundContactEmailInfoSerializer(many=True)
 
     class Meta:
         model = OutboundContact

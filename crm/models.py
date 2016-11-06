@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 from crm.abstracts import (
@@ -6,8 +8,10 @@ from crm.abstracts import (
     AbstractIndividualModel,
     AbstractAddressModel,
     AbstractEmailModel,
-    AbstractPhoneModel
+    AbstractPhoneModel,
 )
+from crm.enums import ContactType
+from django.contrib.postgres.fields import ArrayField
 
 
 class UserCompany(AbstractCompanyModel):
@@ -57,6 +61,19 @@ class InboundContact(AbstractIndividualModel):
     individual = models.ForeignKey("crm.Individual", null=True, blank=True)
     source = models.ForeignKey("crm.Source", null=True)
 
+    searchable_channels = ArrayField(
+        models.CharField(
+            max_length=1,
+            choices=ContactType.get_choices()
+        ),
+        blank=True,
+        null=True
+    )
+
+    @property
+    def is_searchable(self):
+        return self.searchable_channels is not None
+
 
 class InboundContactAddress(AbstractAddressModel):
     inbound_contact = models.ForeignKey("crm.InboundContact", related_name="address")
@@ -70,8 +87,52 @@ class InboundContactPhone(AbstractPhoneModel):
     inbound_contact = models.ForeignKey("crm.InboundContact", related_name="phones")
 
 
-class OutboundContact(models.Model):
+class OutboundContact(AbstractBaseModel):
     individual = models.ForeignKey("crm.Individual")
+    campaign = models.ForeignKey("crm.Campaign", null=True)
+
+    contact_type = models.CharField(
+        max_length=1,
+        choices=ContactType.get_choices(),
+        null=True
+    )
+    date_of_contact = models.DateField(default=datetime.date.today)
+    is_success = models.BooleanField(default=False)
+
+
+class OutboundContactMailInfo(AbstractBaseModel):
+    outbound_contact = models.ForeignKey("crm.OutboundContact", related_name="mail_info")
+    address = models.ForeignKey("crm.IndividualAddress")
+
+    is_deliverable = models.BooleanField(default=False)
+
+
+class OutboundContactEmailInfo(AbstractBaseModel):
+    outbound_contact = models.ForeignKey("crm.OutboundContact", related_name="email_infos")
+    email = models.ForeignKey("crm.IndividualEmail")
+
+    is_unsubscribed = models.BooleanField(default=False)
+    is_soft_bounced = models.BooleanField(default=False)
+    is_hard_bounced = models.BooleanField(default=False)
+
+    open_times = ArrayField(models.DateTimeField(), blank=True)
+    clicked_links = ArrayField(models.URLField(max_length=255), blank=True)
+
+    @property
+    def is_opened(self):
+        return self.open_times is not None
+
+    @property
+    def is_clicked(self):
+        return self.clicked_links is not None
+
+
+class OutboundContactPhoneInfo(AbstractBaseModel):
+    outbound_contact = models.ForeignKey("crm.OutboundContact", related_name="phone_infos")
+    phone = models.ForeignKey("crm.IndividualPhone")
+
+    call_times = ArrayField(models.DateTimeField(), blank=True)
+    success_call_times = ArrayField(models.DateTimeField(), blank=True)
 
 
 class Campaign(AbstractBaseModel):

@@ -82,3 +82,15 @@ class EducationLevel(Enum):
         (DOCTORAL_DEGREE, 'Doctoral degree'),
         (PROFESSIONAL_DEGREE, 'Professional degree')
     )
+
+
+class ContactType(Enum):
+    MAIL = 'M'
+    EMAIL = 'E'
+    PHONE = 'P'
+
+    _CHOICES = (
+        (MAIL, 'Mail'),
+        (EMAIL, 'Email'),
+        (PHONE, 'Phone')
+    )
