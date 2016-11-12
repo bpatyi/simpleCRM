@@ -131,6 +131,8 @@ class OutboundContactPhoneInfo(AbstractBaseModel):
     outbound_contact = models.ForeignKey("crm.OutboundContact", related_name="phone_infos")
     phone = models.ForeignKey("crm.IndividualPhone")
 
+    is_available = models.BooleanField(default=False)
+
     call_times = ArrayField(models.DateTimeField(), blank=True)
     success_call_times = ArrayField(models.DateTimeField(), blank=True)
 

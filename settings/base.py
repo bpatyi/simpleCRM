@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     # own applications
     'accounts',
+    'base',
     'crm',
     'api',
 

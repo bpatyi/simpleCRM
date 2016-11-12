@@ -1,3 +1,5 @@
+import phonenumbers
+
 from crm.models import (
     Individual,
     IndividualAddress,
@@ -15,6 +17,11 @@ from crm.models import (
     SourceType,
     Source
 )
+from crm.validators import (
+    validate_address,
+    validate_phone,
+    validate_email
+)
 
 from rest_framework import serializers
 
@@ -24,6 +31,20 @@ class IndividualAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = IndividualAddress
         fields = '__all__'
+        read_only_fields = [
+            'id',
+            'is_valid',
+            'is_cleansed',
+            'final_type',
+            'formatted_address',
+            'latitude',
+            'longitude',
+            'created_at',
+            'updated_at'
+        ]
+
+    def validate(self, validated_data):
+        return validate_address(validated_data)
 
 
 class IndividualPhoneSerializer(serializers.ModelSerializer):
@@ -31,6 +52,17 @@ class IndividualPhoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = IndividualPhone
         fields = '__all__'
+        read_only_fields = [
+            'id',
+            'is_valid',
+            'is_cleansed',
+            'type',
+            'created_at',
+            'updated_at'
+        ]
+
+    def validate(self, validated_data):
+        return validate_phone(validated_data)
 
 
 class IndividualEmailSerializer(serializers.ModelSerializer):
@@ -38,6 +70,16 @@ class IndividualEmailSerializer(serializers.ModelSerializer):
     class Meta:
         model = IndividualEmail
         fields = '__all__'
+        read_only_fields = [
+            'id',
+            'is_valid',
+            'is_cleansed',
+            'created_at',
+            'updated_at'
+        ]
+
+    def validate(self, validated_data):
+        return validate_email(validated_data)
 
 
 class IndividualSerializer(serializers.ModelSerializer):
@@ -58,6 +100,13 @@ class IndividualSerializer(serializers.ModelSerializer):
             'address',
             'phones',
             'emails'
+        ],
+        read_only_fields = [
+            'id',
+            'is_valid',
+            'is_cleansed',
+            'created_at',
+            'updated_at'
         ]
 
     def create(self, validated_data):
@@ -84,6 +133,20 @@ class InboundContactAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = InboundContactAddress
         fields = '__all__'
+        read_only_fields = [
+            'id',
+            'is_valid',
+            'is_cleansed',
+            'final_type',
+            'formatted_address',
+            'latitude',
+            'longitude',
+            'created_at',
+            'updated_at'
+        ]
+
+    def validate(self, validated_data):
+        return validate_address(validated_data)
 
 
 class InboundContactPhoneSerializer(serializers.ModelSerializer):
@@ -91,6 +154,17 @@ class InboundContactPhoneSerializer(serializers.ModelSerializer):
     class Meta:
         model = InboundContactPhone
         fields = '__all__'
+        read_only_fields = [
+            'id',
+            'is_valid',
+            'is_cleansed',
+            'type',
+            'created_at',
+            'updated_at'
+        ]
+
+    def validate(self, validated_data):
+        return validate_phone(validated_data)
 
 
 class InboundContactEmailSerializer(serializers.ModelSerializer):
@@ -98,6 +172,16 @@ class InboundContactEmailSerializer(serializers.ModelSerializer):
     class Meta:
         model = InboundContactEmail
         fields = '__all__'
+        read_only_fields = [
+            'id',
+            'is_valid',
+            'is_cleansed',
+            'created_at',
+            'updated_at'
+        ]
+
+    def validate(self, validated_data):
+        return validate_email(validated_data)
 
 
 class InboundContactSerializer(serializers.ModelSerializer):
@@ -119,6 +203,13 @@ class InboundContactSerializer(serializers.ModelSerializer):
             'phones',
             'emails'
         ]
+        read_only_fields = [
+            'id',
+            'is_valid',
+            'is_cleansed',
+            'created_at',
+            'updated_at'
+        ]
 
     def create(self, validated_data):
         address_data = validated_data.pop('address')
@@ -127,7 +218,8 @@ class InboundContactSerializer(serializers.ModelSerializer):
 
         inbound_contact = InboundContact.objects.create(**validated_data)
 
-        InboundContactAddress.objects.create(inbound_contact=inbound_contact, **address_data)
+        if address_data:
+            InboundContactAddress.objects.create(inbound_contact=inbound_contact, **address_data)
 
         for phone in phones_data:
             InboundContactPhone.objects.create(inbound_contact=inbound_contact, **phone)
@@ -150,6 +242,13 @@ class OutboundContactEmailInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = OutboundContactEmailInfo
         fields = '__all__'
+        read_only_fields = [
+            'id',
+            'is_soft_bounced',
+            'is_hard_bounced',
+            'created_at',
+            'updated_at'
+        ]
 
 
 class OutboundContactPhoneInfoSerializer(serializers.ModelSerializer):
@@ -167,6 +266,24 @@ class OutboundContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = OutboundContact
         fields = '__all__'
+
+    def create(self, validated_data):
+        mail_info = validated_data.pop('mail_info')
+        phone_infos = validated_data.pop('phone_infos')
+        email_infos = validated_data.pop('email_infos')
+
+        outbound_contact = OutboundContact.objects.create(**validated_data)
+
+        if mail_info:
+            OutboundContactMailInfo.objects.create(outbound_contact=outbound_contact, **mail_info)
+
+        for phone_info in phone_infos:
+            OutboundContactPhoneInfo.objects.create(outbound_contact=outbound_contact, **phone_info)
+
+        for email_info in email_infos:
+            OutboundContactEmailInfo.objects.create(outbound_contact=outbound_contact, **email_info)
+
+        return outbound_contact
 
 
 class CampaignSerializer(serializers.ModelSerializer):
