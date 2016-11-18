@@ -8,7 +8,7 @@ class GeoCoderLog(AbstractBaseModel):
 
     @classmethod
     def get_today_record(cls):
-        return cls.objects.filter(
+        record = cls.objects.filter(
             created_at__range=(
                 datetime.datetime.combine(
                     datetime.date.today(),
@@ -20,6 +20,13 @@ class GeoCoderLog(AbstractBaseModel):
                 )
             )
         )
+
+        if record:
+            return record[0]
+
+        record = cls.objects.create()
+
+        return record
 
     @classmethod
     def update_today_number_of_request(cls):
