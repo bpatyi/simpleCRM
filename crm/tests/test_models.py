@@ -183,3 +183,121 @@ class InboundContactTester(TestCase):
         self.assertIsInstance(email, InboundContactEmail)
         self.assertEqual(email.inbound_contact.id, self.inbound_contact.id)
         self.assertEqual(email.email, 'joe.don@test.com')
+
+
+class OutboundContactTester(TestCase):
+
+    def setUp(self):
+        self.individual = Individual.objects.create(
+            gender='M',
+            title='dr',
+            first_name='Joe',
+            last_name='Don',
+            family_status='S',
+            education_level='E'
+        )
+        self.campaign = Campaign.objects.create(
+            name="Test Campaign",
+            start_date="2015-01-01",
+            end_date="2015-12-01"
+        )
+        self.outbound_contact = OutboundContact.objects.create(
+            individual=self.individual,
+            campaign=self.campaign,
+            contact_type='E',
+            date_of_contact="2015-10-20",
+            is_success=True
+        )
+        self.address = IndividualAddress.objects.create(
+            individual=self.individual,
+            country='HU',
+            postal_code='1061',
+            county='Budapest',
+            locality='Budapest',
+            route='Király utca',
+            street_number='46',
+            formatted_address='Budapest, Király u. 46, 1061 Hungary'
+        )
+        self.email = IndividualEmail.objects.create(
+            individual=self.individual,
+            email='joe.don@test.com'
+        )
+        self.phone = IndividualPhone.objects.create(
+            individual=self.individual,
+            country='HU',
+            number='+36701234567',
+            type='mobile'
+        )
+
+    def test_outbound_contact(self):
+        self.assertIsInstance(self.outbound_contact, OutboundContact)
+        self.assertIsInstance(self.campaign, Campaign)
+        self.assertIsInstance(self.individual, Individual)
+
+        self.assertEqual(self.outbound_contact.individual.id, self.individual.id)
+        self.assertEqual(self.outbound_contact.campaign.id, self.campaign.id)
+        self.assertEqual(self.outbound_contact.contact_type, 'E')
+        self.assertEqual(self.outbound_contact.date_of_contact, "2015-10-20")
+        self.assertEqual(self.outbound_contact.is_success, True)
+
+    def test_outbound_contact_mail_info(self):
+        mail_info = OutboundContactMailInfo.objects.create(
+            outbound_contact=self.outbound_contact,
+            address=self.address,
+            is_deliverable=False
+        )
+
+        self.assertIsInstance(mail_info, OutboundContactMailInfo)
+        self.assertEqual(mail_info.outbound_contact.id, self.outbound_contact.id)
+        self.assertEqual(mail_info.address, self.address)
+        self.assertEqual(mail_info.is_deliverable, False)
+
+    def test_outbound_contact_phone_info(self):
+        phone_info = OutboundContactPhoneInfo.objects.create(
+            outbound_contact=self.outbound_contact,
+            phone=self.phone,
+            is_available=True,
+            call_times=[
+                '2015-10-15 13:35:36',
+                '2015-11-12 10:25:56',
+                '2015-04-23 09:55:16'
+            ],
+            success_call_times=[
+                '2015-11-12 10:25:56'
+            ]
+        )
+
+        self.assertIsInstance(phone_info, OutboundContactPhoneInfo)
+        self.assertEqual(phone_info.outbound_contact.id, self.outbound_contact.id)
+        self.assertEqual(phone_info.phone, self.phone)
+        self.assertEqual(phone_info.is_available, True)
+        self.assertEqual(phone_info.call_times, ['2015-10-15 13:35:36', '2015-11-12 10:25:56', '2015-04-23 09:55:16'])
+        self.assertEqual(phone_info.success_call_times, ['2015-11-12 10:25:56'])
+
+    def test_outbound_contact_email_info(self):
+        email_info = OutboundContactEmailInfo.objects.create(
+            outbound_contact=self.outbound_contact,
+            email=self.email,
+            is_unsubscribed=False,
+            number_of_bounced=3,
+            open_times=[
+                '2015-06-06 12:15:51',
+                '2015-08-06 09:35:56'
+            ],
+            clicked_links=[
+                'https://www.test.com'
+            ]
+        )
+
+        self.assertIsInstance(email_info, OutboundContactEmailInfo)
+        self.assertEqual(email_info.outbound_contact.id, self.outbound_contact.id)
+        self.assertEqual(email_info.email, self.email)
+        self.assertEqual(email_info.is_unsubscribed, False)
+        self.assertEqual(email_info.number_of_bounced, 3)
+        self.assertEqual(email_info.is_soft_bounced, True)
+        self.assertEqual(email_info.is_hard_bounced, False)
+        self.assertEqual(email_info.open_times, ['2015-06-06 12:15:51', '2015-08-06 09:35:56'])
+        self.assertEqual(email_info.clicked_links, ['https://www.test.com'])
+        self.assertEqual(email_info.is_opened, True)
+        self.assertEqual(email_info.is_clicked, True)
+
