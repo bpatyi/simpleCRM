@@ -115,11 +115,24 @@ class OutboundContactEmailInfo(AbstractBaseModel):
     email = models.ForeignKey("crm.IndividualEmail")
 
     is_unsubscribed = models.BooleanField(default=False)
+
+    number_of_bounced = models.IntegerField(default=0)
     is_soft_bounced = models.BooleanField(default=False)
     is_hard_bounced = models.BooleanField(default=False)
 
     open_times = ArrayField(models.DateTimeField(), blank=True)
     clicked_links = ArrayField(models.URLField(max_length=255), blank=True)
+
+    def save(self, *args, **kwargs):
+        number_of_bounced = kwargs.get('number_of_bounced', self.number_of_bounced)
+
+        if 0 < number_of_bounced <= 3:
+            self.is_soft_bounced = True
+        elif number_of_bounced > 3:
+            self.is_hard_bounced = True
+
+        super(OutboundContactEmailInfo, self).save(*args, **kwargs)
+
 
     @property
     def is_opened(self):
