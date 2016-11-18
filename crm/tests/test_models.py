@@ -326,3 +326,21 @@ class SourceTypeTester(TestCase):
 
         self.assertIsInstance(source_type, SourceType)
         self.assertEqual(source_type.name, "Source Type Test")
+
+
+class SourceTester(TestCase):
+
+    def setUp(self):
+        self.source_type = SourceType.objects.create(
+            name="Source Type Test"
+        )
+
+    def test_source(self):
+        source = Source.objects.create(
+            name="Source Test",
+            type_of_source=self.source_type
+        )
+
+        self.assertIsInstance(source, Source)
+        self.assertEqual(source.type_of_source, self.source_type)
+        self.assertEqual(source.name, "Source Test")
