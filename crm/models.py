@@ -41,6 +41,9 @@ class Individual(AbstractIndividualModel):
     def __str__(self):
         return ' '.join([self.title, self.first_name, self.last_name])
 
+    def get_full_name(self):
+        return str(self)
+
 
 class IndividualAddress(AbstractAddressModel):
     individual = models.ForeignKey("crm.Individual", related_name="address")
