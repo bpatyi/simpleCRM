@@ -315,3 +315,14 @@ class CampaignTester(TestCase):
         self.assertEqual(campaign.name, "Test Campaign")
         self.assertEqual(campaign.start_date, "2015-01-01")
         self.assertEqual(campaign.end_date, "2015-12-30")
+
+
+class SourceTypeTester(TestCase):
+
+    def test_source_type(self):
+        source_type = SourceType.objects.create(
+            name="Source Type Test"
+        )
+
+        self.assertIsInstance(source_type, SourceType)
+        self.assertEqual(source_type.name, "Source Type Test")
