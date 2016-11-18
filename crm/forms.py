@@ -45,7 +45,12 @@ class IndividualAddressForm(ModelForm):
         }
 
     def clean(self):
-        return validate_address(self.cleaned_data)
+        address = validate_address(self.cleaned_data)
+
+        if not address['is_valid']:
+            raise ValidationError('The given address is invalid.')
+
+        return address
 
 
 class IndividualEmailForm(ModelForm):
