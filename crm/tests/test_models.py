@@ -301,3 +301,17 @@ class OutboundContactTester(TestCase):
         self.assertEqual(email_info.is_opened, True)
         self.assertEqual(email_info.is_clicked, True)
 
+
+class CampaignTester(TestCase):
+
+    def test_campaign(self):
+        campaign = Campaign.objects.create(
+            name="Test Campaign",
+            start_date="2015-01-01",
+            end_date="2015-12-30"
+        )
+
+        self.assertIsInstance(campaign, Campaign)
+        self.assertEqual(campaign.name, "Test Campaign")
+        self.assertEqual(campaign.start_date, "2015-01-01")
+        self.assertEqual(campaign.end_date, "2015-12-30")
